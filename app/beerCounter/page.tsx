@@ -25,7 +25,7 @@ const Principal = () => {
       const aux: { count?: number; limits?: number } = await getCount("beer");
       return aux;
     } catch {
-      return 0;
+      return null;
     }
   };
 

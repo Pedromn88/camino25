@@ -20,7 +20,7 @@ const LoveCounter = () => {
       const aux: { count?: number; limits?: number } = await getCount("love");
       return aux;
     } catch {
-      return 0;
+      return null;
     }
   };
 
@@ -44,7 +44,9 @@ const LoveCounter = () => {
   const handleDelete = async (id: string) => {
     await deleteCount(id);
     const resp = await handleCountLove();
-    setLove(resp?.count);
+    if (resp?.count) {
+      setLove(resp?.count);
+    }
   };
 
   useEffect(() => {

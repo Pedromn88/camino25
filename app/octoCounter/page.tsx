@@ -22,7 +22,7 @@ const OctoCounter = () => {
       );
       return aux;
     } catch {
-      return 0;
+      return null;
     }
   };
 
