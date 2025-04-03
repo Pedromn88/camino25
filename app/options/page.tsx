@@ -20,16 +20,19 @@ const Principal = () => {
       const aux: { count?: number; limits?: number } = await getCount(
         "octopus"
       );
-      return aux;
+      return {
+        count: aux.count ?? 0,
+        limits: aux.limits ?? 0,
+      };
     } catch {
-      return 0;
+      return null;
     }
   };
 
   const handleInitialOcto = async () => {
     setLoading(true);
     const res = await handleCountOcto();
-    setOctoLimit(res?.limits);
+    setOctoLimit(res?.limits ?? 0);
     setLoading(false);
   };
 
@@ -42,9 +45,12 @@ const Principal = () => {
   const handleCountBeer = async () => {
     try {
       const aux: { count?: number; limits?: number } = await getCount("beer");
-      return aux;
+      return {
+        count: aux.count ?? 0,
+        limits: aux.limits ?? 0,
+      };
     } catch {
-      return 0;
+      return null;
     }
   };
 
@@ -52,7 +58,7 @@ const Principal = () => {
     setLoading(true);
     const res = await handleCountBeer();
     if (res) {
-      setBeerLimit(res?.limits);
+      setBeerLimit(res?.limits ?? 0);
     }
     setLoading(false);
   };
@@ -66,9 +72,12 @@ const Principal = () => {
   const handleCountLove = async () => {
     try {
       const aux: { count?: number; limits?: number } = await getCount("love");
-      return aux;
+      return {
+        count: aux.count ?? 0,
+        limits: aux.limits ?? 0,
+      };
     } catch {
-      return 0;
+      return null;
     }
   };
 
@@ -76,7 +85,7 @@ const Principal = () => {
     setLoading(true);
     const res = await handleCountLove();
     if (res) {
-      setBeerLimit(res?.limits);
+      setBeerLimit(res?.limits ?? 0);
     }
     setLoading(false);
   };
@@ -95,7 +104,7 @@ const Principal = () => {
 
   return (
     <Grid container className="container-button-options">
-      {loading && <LoadingCustom loading={loading} />}
+      {loading && <LoadingCustom message={"Cargando"} loading={loading} />}
       {!loading && (
         <>
           <Grid size={12} className="flex-center mt-3">
@@ -151,7 +160,7 @@ const Principal = () => {
               icon={null}
               className="octo-button "
               background="#dd0873"
-              onClick={() => newLimitLove("beer")}
+              onClick={() => newLimitLove("love")}
               message="Guardar"
             />
           </Grid>

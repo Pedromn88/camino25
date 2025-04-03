@@ -18,7 +18,7 @@ const LoveCounter = () => {
   const handleCountLove = async () => {
     try {
       const aux: { count?: number; limits?: number } = await getCount("love");
-      return aux;
+      return { count: aux.count ?? 0, limits: aux.limits ?? 0 };
     } catch {
       return null;
     }
@@ -28,17 +28,17 @@ const LoveCounter = () => {
     setLoading(true);
     const res = await handleCountLove();
     console.log(res);
-    setLove(res?.count);
-    setLimit(res?.limits);
+    setLove(res?.count ?? 0);
+    setLimit(res?.limits ?? 0);
     setLoading(false);
   };
 
   const fillHeightLove = (love / limit) * 1000;
 
   const handleIncre = async (id: string) => {
-    await incrementCount(id, "count", null);
+    await incrementCount(id, "count", limit);
     const resp = await handleCountLove();
-    setLove(resp?.count);
+    setLove(resp?.count ?? 0);
   };
 
   const handleDelete = async (id: string) => {

@@ -37,17 +37,17 @@ const Principal = () => {
     setLoading(true);
     const res: BeerResponse | null = await handleCountBeer();
     if (res) {
-      setBeer(res?.count);
-      setLimit(res?.limits);
+      setBeer(res?.count ?? 0);
+      setLimit(res?.limits ?? 0);
     }
     setLoading(false);
   };
 
   const handleIncre = async (id: string) => {
-    await incrementCount(id, "count");
+    await incrementCount(id, "count", limit);
     const resp: BeerResponse | null = await handleCountBeer();
     if (resp) {
-      setBeer(resp?.count);
+      setBeer(resp?.count ?? 0);
     }
   };
 

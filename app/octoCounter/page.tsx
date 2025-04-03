@@ -20,7 +20,7 @@ const OctoCounter = () => {
       const aux: { count?: number; limits?: number } = await getCount(
         "octopus"
       );
-      return aux;
+      return { count: aux.count ?? 0, limits: aux.limits ?? 0 };
     } catch {
       return null;
     }
@@ -29,23 +29,23 @@ const OctoCounter = () => {
   const handleInitial = async () => {
     setLoading(true);
     const res = await handleCountOcto();
-    setOcta(res?.count);
-    setLimit(res?.limits);
+    setOcta(res?.count ?? 0);
+    setLimit(res?.limits ?? 0);
     setLoading(false);
   };
 
   const fillHeightOcto = (octa / limit) * 1000;
 
   const handleIncre = async (id: string) => {
-    await incrementCount(id, "count", null);
+    await incrementCount(id, "count", limit);
     const resp = await handleCountOcto();
-    setOcta(resp?.count);
+    setOcta(resp?.count ?? 0);
   };
 
   const handleDelete = async (id: string) => {
     await deleteCount(id);
     const resp = await handleCountOcto();
-    setOcta(resp?.count);
+    setOcta(resp?.count ?? 0);
   };
 
   useEffect(() => {
