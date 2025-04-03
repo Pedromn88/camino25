@@ -11,8 +11,8 @@ import CountCustom from "../Component/Custom/CountCustom";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
 
 interface BeerResponse {
-  count: number;
-  limits: number;
+  count?: number;
+  limits?: number;
 }
 
 const Principal = () => {
@@ -29,14 +29,13 @@ const Principal = () => {
         limits: aux.limits ?? 0,
       };
     } catch {
-      return null; // Retornamos null en caso de error
+      return null;
     }
   };
 
   const handleinitial = async () => {
     setLoading(true);
     const res: BeerResponse | null = await handleCountBeer();
-    console.log(res);
     if (res) {
       setBeer(res?.count);
       setLimit(res?.limits);
@@ -45,7 +44,7 @@ const Principal = () => {
   };
 
   const handleIncre = async (id: string) => {
-    await incrementCount(id, "count", null);
+    await incrementCount(id, "count");
     const resp: BeerResponse | null = await handleCountBeer();
     if (resp) {
       setBeer(resp?.count);
