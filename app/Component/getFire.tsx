@@ -16,7 +16,7 @@ const getCount = async (
       limits: data.limits ?? 0,
     };
   } else {
-    console.log("No existe el documento, inicializando...");
+    console.error("No existe el documento, inicializando...");
     return { count: 0, limits: 0 };
   }
 };

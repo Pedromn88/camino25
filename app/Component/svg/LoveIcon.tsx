@@ -16,7 +16,6 @@ const LoveIcon: React.FC<LoveIconProps> = ({
   fillHeight,
   fillOpacity = "0.8",
 }) => {
-  console.log(fillHeight);
   return (
     <svg
       version="1.1"

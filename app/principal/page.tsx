@@ -10,7 +10,7 @@ const Principal = () => {
         link="/octoCounter"
         srcImage="/Zoidberg.webp"
         message="Pulpómetro"
-        sizes="10vw"
+        sizes="15vw"
       />
       <ButtonMenuCustom
         alt="burneySimpons button"

@@ -14,8 +14,6 @@ const Principal = () => {
   const [beerLimit, setBeerLimit] = useState<number>(0);
   const [loveLimit, setLoveLimit] = useState<number>(0);
 
-  console.log(loveLimit);
-
   ///////Octo
   const handleCountOcto = async () => {
     try {

@@ -27,7 +27,6 @@ const LoveCounter = () => {
   const handleInitial = async () => {
     setLoading(true);
     const res = await handleCountLove();
-    console.log(res);
     setLove(res?.count ?? 0);
     setLimit(res?.limits ?? 0);
     setLoading(false);

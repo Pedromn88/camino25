@@ -18,7 +18,7 @@ const ButtonCustom: React.FC<ButtonCustomProps> = ({
 }) => {
   return (
     <button
-      className={`${className} btn btn-primary flex justify-center align-center button-custom `}
+      className={`${className} btn btn-primary flex justify-center align-center button-custom`}
       style={{ background: background }}
       onClick={onClick}
     >

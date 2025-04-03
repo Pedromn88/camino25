@@ -53,10 +53,11 @@ const Principal = () => {
 
   const handleDelete = async (id: string) => {
     await deleteCount(id);
-    handleCountBeer();
+    const resp: BeerResponse | null = await handleCountBeer();
+    if (resp) {
+      setBeer(resp.count ?? 0);
+    }
   };
-
-  console.log("beeeCounter", limit);
 
   const fillHeightBeer = (beer / limit) * 1000;
 
