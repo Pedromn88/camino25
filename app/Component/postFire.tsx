@@ -23,7 +23,7 @@ const incrementCount = async (
       | { count?: number; limits?: number }
       | undefined;
     if (data && field === "count") {
-      await updateDoc(docRef, { count: data.count + 1 });
+      await updateDoc(docRef, { count: data.count && data.count + 1 });
     } else if (data && field === "limits") {
       await updateDoc(docRef, { limits: limits });
     }
