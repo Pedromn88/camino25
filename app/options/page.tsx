@@ -14,6 +14,8 @@ const Principal = () => {
   const [beerLimit, setBeerLimit] = useState<number>(0);
   const [loveLimit, setLoveLimit] = useState<number>(0);
 
+  console.log(loveLimit);
+
   ///////Octo
   const handleCountOcto = async () => {
     try {
@@ -85,7 +87,7 @@ const Principal = () => {
     setLoading(true);
     const res = await handleCountLove();
     if (res) {
-      setBeerLimit(res?.limits ?? 0);
+      setLoveLimit(res?.limits ?? 0);
     }
     setLoading(false);
   };
@@ -114,7 +116,7 @@ const Principal = () => {
               label="Límite"
               value={octoLimit}
               onChange={(e) => setOctoLimit(Number(e.target.value))}
-              onInput={(e) => {
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
               }}
             />
@@ -133,7 +135,7 @@ const Principal = () => {
               label="Límite"
               value={beerLimit}
               onChange={(e) => setBeerLimit(Number(e.target.value))}
-              onInput={(e) => {
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
               }}
             />
@@ -152,7 +154,7 @@ const Principal = () => {
               label="Límite"
               value={loveLimit}
               onChange={(e) => setLoveLimit(Number(e.target.value))}
-              onInput={(e) => {
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
               }}
             />
