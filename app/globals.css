@@ -60,7 +60,7 @@ a {
 }
 
 .flex-reverse {
-  flex-direction: ;
+  flex-direction: row-reverse;
 }
 
 .mt-3 {
