@@ -20,12 +20,16 @@ const Principal = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
 
-  const handleCountBeer = async () => {
+  const handleCountBeer = async (): Promise<BeerResponse | null> => {
     try {
       const aux: { count?: number; limits?: number } = await getCount("beer");
-      return aux;
+
+      return {
+        count: aux.count ?? 0,
+        limits: aux.limits ?? 0,
+      };
     } catch {
-      return null;
+      return null; // Retornamos null en caso de error
     }
   };
 
