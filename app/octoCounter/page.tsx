@@ -34,7 +34,7 @@ const OctoCounter = () => {
     setLoading(false);
   };
 
-  const fillHeightOcto = (octa / limit) * 1000;
+  const fillHeightOcto = ((limit - octa) / limit) * 284.5;
 
   const handleIncre = async (id: string) => {
     await incrementCount(id, "count", limit);
@@ -71,7 +71,7 @@ const OctoCounter = () => {
             />
 
             <ButtonCustom
-              className="octo-button"
+              className="octo-button mt-3"
               background="#3c607d"
               onClick={() => handleIncre("octopus")}
               icon={

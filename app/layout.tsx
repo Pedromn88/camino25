@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Contador Camino Apretao 28",
+  title: "Contador Camino Apretao 25",
   description: "Creado por una panda de Colgaos",
 };
 

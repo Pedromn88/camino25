@@ -4,7 +4,7 @@ interface BeerIconProps {
   width?: string;
   height?: string;
   fill?: string;
-  stroke: string;
+  stroke?: string;
   fillHeight: number;
   fillOpacity: string;
 }

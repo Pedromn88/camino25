@@ -2,11 +2,12 @@ import React from "react";
 import "./styledCustom.scss";
 
 interface ButtonCustomProps {
-  icon: React.ReactNode;
-  message: string;
-  onClick: () => void;
-  background: string;
-  className: string;
+  icon?: React.ReactNode;
+  message?: string;
+  onClick?: () => void;
+  background?: string;
+  className?: string;
+  disabled?: boolean;
 }
 
 const ButtonCustom: React.FC<ButtonCustomProps> = ({
@@ -15,9 +16,11 @@ const ButtonCustom: React.FC<ButtonCustomProps> = ({
   onClick,
   background,
   className,
+  disabled,
 }) => {
   return (
     <button
+      disabled={disabled}
       className={`${className} btn btn-primary flex justify-center align-center button-custom`}
       style={{ background: background }}
       onClick={onClick}

@@ -23,7 +23,7 @@ const Principal = () => {
         alt="Options button"
         link="/loveCounter"
         srcImage="/juan-ymedio.png"
-        message="Encantómetro"
+        message="Mencantómetro"
         sizes="15vw"
       />
     </Grid>
