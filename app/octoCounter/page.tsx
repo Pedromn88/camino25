@@ -9,11 +9,15 @@ import { Grid } from "@mui/material";
 import ButtonCustom from "../Component/Custom/ButtonCustom";
 import CountCustom from "../Component/Custom/CountCustom";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
+import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
 
 const OctoCounter = () => {
   const [octa, setOcta] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
+  const [geolocation, setGeolocation] = useState<{ latitude: number; longitude: number } | null>(null);
+  const { location, loadingLocation, error, getLocation } = useGeolocation();
+
 
   const handleCountOcto = async () => {
     try {
@@ -37,7 +41,7 @@ const OctoCounter = () => {
   const fillHeightOcto = ((limit - octa) / limit) * 284.5;
 
   const handleIncre = async (id: string) => {
-    await incrementCount(id, "count", limit);
+    await incrementCount(id, "count", limit, geolocation);
     const resp = await handleCountOcto();
     setOcta(resp?.count ?? 0);
   };

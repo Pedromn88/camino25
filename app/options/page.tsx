@@ -47,7 +47,7 @@ const Principal = () => {
 
   const newLimitOcto = async (id: string) => {
     setLoading(true);
-    await incrementCount(id, "limits", octoLimit);
+    await incrementCount(id, "limits", octoLimit, null);
     setLoading(false);
   };
 
@@ -76,7 +76,7 @@ const Principal = () => {
 
   const newLimitBeer = async (id: string) => {
     setLoading(true);
-    await incrementCount(id, "limits", beerLimit);
+    await incrementCount(id, "limits", beerLimit, null);
     setLoading(false);
   };
 
@@ -105,7 +105,7 @@ const Principal = () => {
 
   const newLimitLove = async (id: string) => {
     setLoading(true);
-    await incrementCount(id, "limits", loveLimit);
+    await incrementCount(id, "limits", loveLimit, null);
     setLoading(false);
   };
 
@@ -141,9 +141,9 @@ const Principal = () => {
               label="Máx Pulpo"
               value={octoLimit}
               onChange={(e) => setOctoLimit(Number(e.target.value))}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
-              }}
+              }}*/
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
@@ -186,9 +186,9 @@ const Principal = () => {
               label="Máx Birra"
               value={beerLimit}
               onChange={(e) => setBeerLimit(Number(e.target.value))}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, "");
-              }}
+              }}*/
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
@@ -231,9 +231,9 @@ const Principal = () => {
               label="Máx Loved"
               value={loveLimit}
               onChange={(e) => setLoveLimit(Number(e.target.value))}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, "");
-              }}
+              /*  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                }}*/
               sx={{
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {

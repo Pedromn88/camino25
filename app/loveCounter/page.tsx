@@ -14,6 +14,7 @@ const LoveCounter = () => {
   const [love, setLove] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
+  const [geoLocation, setGeoLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
   const handleCountLove = async () => {
     try {
@@ -35,7 +36,7 @@ const LoveCounter = () => {
   const fillHeightLove = (love / limit) * 1000;
 
   const handleIncre = async (id: string) => {
-    await incrementCount(id, "count", limit);
+    await incrementCount(id, "count", limit, geoLocation);
     const resp = await handleCountLove();
     setLove(resp?.count ?? 0);
   };

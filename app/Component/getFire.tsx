@@ -5,19 +5,20 @@ const db: Firestore = getFirestore(app);
 
 const getCount = async (
   docId: string
-): Promise<{ count: number; limits: number }> => {
+): Promise<{ count: number; limits: number; geoLocation: { latitude: number; longitude: number }[] }> => {
   const docRef = doc(db, "counter", docId);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    const data = docSnap.data() as { count?: number; limits?: number };
+    const data = docSnap.data() as { count?: number; limits?: number, geoLocation?: { latitude: number; longitude: number }[] };
     return {
       count: data.count ?? 0,
       limits: data.limits ?? 0,
+      geoLocation: data.geoLocation ?? [],
     };
   } else {
     console.error("No existe el documento, inicializando...");
-    return { count: 0, limits: 0 };
+    return { count: 0, limits: 0, geoLocation: [] };
   }
 };
 

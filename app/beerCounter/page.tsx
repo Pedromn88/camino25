@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import getCount from "../Component/getFire";
+import {
+  getFirestore,
+  doc,
+  onSnapshot,
+} from "firebase/firestore";
+import { app } from "../firebaseConfig";
 import incrementCount from "../Component/postFire";
 import deleteCount from "../Component/deleteFire";
 import BeerIcon from "../Component/svg/BeerIcon";
@@ -9,71 +14,109 @@ import { Grid } from "@mui/material";
 import ButtonCustom from "../Component/Custom/ButtonCustom";
 import CountCustom from "../Component/Custom/CountCustom";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
+import dynamic from "next/dynamic";
+import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
+
+const MapLeaflet = dynamic(() => import("../Component/map/map"), {
+  ssr: false,
+});
 
 interface BeerResponse {
   count?: number;
   limits?: number;
+  geoLocation?: { latitude: number; longitude: number; idCount?: number }[];
 }
+
+const db = getFirestore(app);
 
 const Principal = () => {
   const [beer, setBeer] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
+  const { getLocation } = useGeolocation();
 
-  const handleCountBeer = async (): Promise<BeerResponse | null> => {
-    try {
-      const aux: { count?: number; limits?: number } = await getCount("beer");
+  const docRef = doc(db, "counter", "beer");
 
-      return {
-        count: aux.count ?? 0,
-        limits: aux.limits ?? 0,
-      };
-    } catch {
-      return null;
-    }
-  };
-
-  const handleinitial = async () => {
+  useEffect(() => {
     setLoading(true);
-    const res: BeerResponse | null = await handleCountBeer();
-    if (res) {
-      setBeer(res?.count ?? 0);
-      setLimit(res?.limits ?? 0);
-    }
-    setLoading(false);
+
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data() as BeerResponse;
+
+        setBeer(data.count ?? 0);
+        setLimit(data.limits ?? 0);
+
+        const coords =
+          data.geoLocation?.map(
+            (g) => [g.latitude, g.longitude] as [number, number]
+          ) ?? [];
+
+        setPosition(coords.length ? coords : [[51.505, -0.09]]);
+      } else {
+        setBeer(0);
+        setLimit(0);
+        setPosition([[51.505, -0.09]]);
+      }
+
+      setLoading(false);
+    });
+
+
+    return () => unsubscribe();
+  }, []);
+
+  const getCurrentLocation = (): Promise<{
+    latitude: number;
+    longitude: number;
+  } | null> => {
+    return new Promise((resolve) => {
+      if (!navigator.geolocation) {
+        resolve(null);
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          resolve({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          });
+        },
+        () => resolve(null)
+      );
+    });
   };
 
   const handleIncre = async (id: string) => {
-    await incrementCount(id, "count", limit);
-    const resp: BeerResponse | null = await handleCountBeer();
-    if (resp) {
-      setBeer(resp?.count ?? 0);
-    }
-  };
+    const coords = await getLocation();
 
+    if (!coords) {
+      alert("No se pudo obtener tu ubicación 😢");
+      return;
+    }
+    await incrementCount(id, "count", limit, {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+    });
+  };
   const handleDelete = async (id: string) => {
     await deleteCount(id);
-    const resp: BeerResponse | null = await handleCountBeer();
-    if (resp) {
-      setBeer(resp.count ?? 0);
-    }
   };
 
   const fillHeightBeer = (beer / limit) * 1000;
-
-  useEffect(() => {
-    handleinitial();
-  }, []);
-
   return (
-    <div className="flex-center">
+    <div className="flex-center flex-column">
       {loading && (
         <LoadingCustom message="Cargando estrellómetro" loading={true} />
       )}
+
       {!loading && (
         <Grid container>
           <Grid size={12} className="flex-center-content">
             <CountCustom count={beer} type="beer" />
+
             <BeerIcon
               width="500"
               height="500"
@@ -82,6 +125,7 @@ const Principal = () => {
               fillOpacity="0.3"
               stroke="#333"
             />
+
             <ButtonCustom
               className="beer-button mt-3"
               background="#9f5d12"
@@ -118,6 +162,8 @@ const Principal = () => {
           </Grid>
         </Grid>
       )}
+
+      {!loading && <MapLeaflet position={position} />}
     </div>
   );
 };

@@ -5,27 +5,29 @@ import ButtonMenuCustom from "../Component/Custom/ButtonMenuCustom";
 const Principal = () => {
   return (
     <Grid container className="container-menu-principal-options">
-      <ButtonMenuCustom
-        alt="Zoidberg button"
-        link="/octoCounter"
-        srcImage="/Zoidberg.webp"
-        message="Pulpómetro"
-        sizes="15vw"
-      />
-      <ButtonMenuCustom
-        alt="burneySimpons button"
-        link="/beerCounter"
-        srcImage="/barney.webp"
-        message="Estrellómetro"
-        sizes="15vw"
-      />
-      <ButtonMenuCustom
-        alt="Options button"
-        link="/loveCounter"
-        srcImage="/juan-ymedio.png"
-        message="Mencantómetro"
-        sizes="15vw"
-      />
+      <Grid size={{ xs: 12 }}>
+        <ButtonMenuCustom
+          alt="Zoidberg button"
+          link="/octoCounter"
+          srcImage="/Zoidberg.webp"
+          message="Pulpómetro"
+          sizes="15vw"
+        />
+        <ButtonMenuCustom
+          alt="burneySimpons button"
+          link="/beerCounter"
+          srcImage="/barney.webp"
+          message="Estrellómetro"
+          sizes="15vw"
+        />
+        <ButtonMenuCustom
+          alt="Options button"
+          link="/loveCounter"
+          srcImage="/juan-ymedio.png"
+          message="Mencantómetro"
+          sizes="15vw"
+        />
+      </Grid>
     </Grid>
   );
 };
