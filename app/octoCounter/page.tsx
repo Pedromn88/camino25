@@ -10,60 +10,88 @@ import ButtonCustom from "../Component/Custom/ButtonCustom";
 import CountCustom from "../Component/Custom/CountCustom";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
 import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
+import dynamic from "next/dynamic";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+
+
+const MapLeaflet = dynamic(() => import("../Component/map/map"), {
+  ssr: false,
+});
+
+interface octoResponse {
+  count?: number;
+  limits?: number;
+  geoLocation?: { latitude: number; longitude: number; idCount?: number }[];
+}
+
 
 const OctoCounter = () => {
   const [octa, setOcta] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
-  const [geolocation, setGeolocation] = useState<{ latitude: number; longitude: number } | null>(null);
-  const { location, loadingLocation, error, getLocation } = useGeolocation();
+  const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
+  const { getLocation } = useGeolocation();
+  const docRef = doc(db, "counter", "octopus");
 
 
-  const handleCountOcto = async () => {
-    try {
-      const aux: { count?: number; limits?: number } = await getCount(
-        "octopus"
-      );
-      return { count: aux.count ?? 0, limits: aux.limits ?? 0 };
-    } catch {
-      return null;
-    }
-  };
-
-  const handleInitial = async () => {
+  useEffect(() => {
     setLoading(true);
-    const res = await handleCountOcto();
-    setOcta(res?.count ?? 0);
-    setLimit(res?.limits ?? 0);
-    setLoading(false);
+
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data() as octoResponse;
+
+        setOcta(data.count ?? 0);
+        setLimit(data.limits ?? 0);
+
+        const coords =
+          data.geoLocation?.map(
+            (g) => [g.latitude, g.longitude] as [number, number]
+          ) ?? [];
+
+        setPosition(coords.length ? coords : [[51.505, -0.09]]);
+      } else {
+        setOcta(0);
+        setLimit(0);
+        setPosition([[51.505, -0.09]]);
+      }
+
+      setLoading(false);
+    });
+
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleIncre = async (id: string) => {
+    setLoading(true)
+    const coords = await getLocation();
+
+    if (!coords) {
+      alert("No se pudo obtener tu ubicación 😢");
+      return;
+    }
+    await incrementCount(id, "count", limit, {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+    });
+    setLoading(false)
+  };
+  const handleDelete = async (id: string) => {
+    await deleteCount(id);
   };
 
   const fillHeightOcto = ((limit - octa) / limit) * 284.5;
 
-  const handleIncre = async (id: string) => {
-    await incrementCount(id, "count", limit, geolocation);
-    const resp = await handleCountOcto();
-    setOcta(resp?.count ?? 0);
-  };
-
-  const handleDelete = async (id: string) => {
-    await deleteCount(id);
-    const resp = await handleCountOcto();
-    setOcta(resp?.count ?? 0);
-  };
-
-  useEffect(() => {
-    handleInitial();
-  }, []);
-
   return (
-    <div className="flex-between-column">
-      <Grid container>
-        {loading && (
-          <LoadingCustom message="Cargando pulpómetro" loading={loading} />
-        )}
-        {!loading && (
-          <Grid size={12} className="flex-between-column">
+    <div className="flex-center flex-column pb-3">
+      {loading && (
+        <LoadingCustom message="Cargando pulpómetro" loading={loading} />
+      )}
+      {!loading && (
+        <Grid container className="w-100">
+          <Grid size={12} className="flex-center-content w-100">
             <CountCustom count={octa} type="octo" />
             <OctopusIcon
               width="350"
@@ -73,10 +101,9 @@ const OctoCounter = () => {
               fillHeight={fillHeightOcto}
               fillOpacity="0.3"
             />
-
             <ButtonCustom
-              className="octo-button mt-3"
-              background="#3c607d"
+              className=" mt-3"
+              background="#1a476bff"
               onClick={() => handleIncre("octopus")}
               icon={
                 <OctopusIcon
@@ -92,7 +119,7 @@ const OctoCounter = () => {
             />
 
             <ButtonCustom
-              background="#3c607d"
+              background="#719abbff"
               className="octo-button mt-3 mb-3 flex-reverse"
               onClick={() => handleDelete("octopus")}
               icon={
@@ -108,10 +135,16 @@ const OctoCounter = () => {
               message="Ma liao - "
             />
           </Grid>
-        )}
-      </Grid>
+        </Grid>
+      )}
+      {!loading &&
+        <MapLeaflet position={position} type="octo" />
+      }
     </div>
   );
 };
 
 export default OctoCounter;
+
+
+

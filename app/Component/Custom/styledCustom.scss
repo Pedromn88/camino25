@@ -28,6 +28,8 @@ $camino-dark: #0F172A;
   color: #1e293b
 }
 
+
+
 .beer-color {
   border: 2px solid $camino-gold;
   border-left: 4px solid $camino-gold;
@@ -147,7 +149,7 @@ $camino-dark: #0F172A;
 
 .count-number {
   display: inline-block;
-  padding: 6px 6px 4px;
+  // padding: 6px 6px 4px;
   border-radius: 3px;
   margin: 0px 5px;
   min-width: 30px;
@@ -263,6 +265,18 @@ $camino-dark: #0F172A;
 .nav-btn.active {
   color: #7c3aed;
   /* Camino purple */
+}
+
+.octo-letter {
+  color: $camino-blue !important;
+}
+
+.beer-letter {
+  color: $camino-gold !important;
+}
+
+.love-letter {
+  color: $camino-purple !important;
 }
 
 @keyframes slide {

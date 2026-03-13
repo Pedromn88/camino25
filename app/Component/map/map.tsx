@@ -42,7 +42,6 @@ const MapFix = () => {
 const MapLeaflet = ({ position, type, height = "300px", width = "80%" }: FixMapProps) => {
     const [street, setStreet] = useState<string | null>(null);
 
-    console.log(type)
     const beerIcon = L.divIcon({
         html: renderToString(
             <BeerIcon
@@ -107,7 +106,6 @@ const MapLeaflet = ({ position, type, height = "300px", width = "80%" }: FixMapP
 
 
     const getIcon = (type: string) => {
-        console.log("🚀 ~ getIcon ~ type:", type)
         switch (type) {
             case "beer":
                 return beerIcon;
@@ -138,16 +136,12 @@ const MapLeaflet = ({ position, type, height = "300px", width = "80%" }: FixMapP
         setStreet(street);
     };
 
-
-
     return (
         <>
-
             <div className="container-title-map" >
                 <p className="tittle-map">Donde nos tocó estar</p>
                 <p className="letter-map">O Camiño apretao 2026</p>
             </div>
-
             <MapContainer
                 center={position?.[0]}
                 zoom={13}

@@ -37,7 +37,6 @@ const incrementCount = async (
       const newCount = (data.count ?? 0) + 1;
 
       let newGeoLocations = data.geoLocation ?? [];
-      console.log(newGeoLocations);
       if (geoLocation) {
         newGeoLocations = [
           ...newGeoLocations,

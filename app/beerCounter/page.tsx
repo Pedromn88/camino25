@@ -29,7 +29,7 @@ interface BeerResponse {
 
 const db = getFirestore(app);
 
-const Principal = () => {
+const BeerCount = () => {
   const [beer, setBeer] = useState<number>(0);
   const [limit, setLimit] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
@@ -88,14 +88,16 @@ const Principal = () => {
   };
 
   const fillHeightBeer = (beer / limit) * 1000;
+
+
   return (
-    <div className="flex-center flex-column">
+    <div className="flex-center flex-column pb-3">
       {loading && (
         <LoadingCustom message="Cargando estrellómetro" loading={true} />
       )}
 
       {!loading && (
-        <Grid container>
+        <Grid container className="w-100">
           <Grid size={12} className="flex-center-content">
             <CountCustom count={beer} type="beer" />
             <BeerIcon
@@ -150,4 +152,4 @@ const Principal = () => {
   );
 };
 
-export default Principal;
+export default BeerCount;
