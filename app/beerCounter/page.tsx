@@ -108,7 +108,7 @@ const Principal = () => {
             />
             <ButtonCustom
               className="beer-button mt-3"
-              background="#9f5d12"
+              background="#221610"
               onClick={() => handleIncre("beer")}
               icon={
                 <BeerIcon
@@ -120,12 +120,12 @@ const Principal = () => {
                   stroke="0"
                 />
               }
-              message="Estrella Pa Dentro"
+              message="+Estrella Pa Dentro"
             />
 
             <ButtonCustom
               className="beer-button mt-3 mb-3 flex-reverse"
-              background="#9f5d12"
+              background="#4a3728"
               onClick={() => handleDelete("beer")}
               icon={
                 <BeerIcon
