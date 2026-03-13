@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(255 255 255 / 0.8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  padding: 15px 30px;
+}
+
+.title-header {
+  font-family: Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4a1d7f;
+  line-height: 1.75rem;
+}
+
+.subtitle-header {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4a1d7f;
+  line-height: 1.5rem;
+}

@@ -7,7 +7,8 @@ interface CountCustomProps {
 
 const CountCustom: React.FC<CountCustomProps> = ({ count, type }) => {
   return (
-    <div className="center-count subcontent ">
+    <div className="center-count subcontent">
+      <h2 className="tittle-count">ESTRELLÓMETRO</h2>
       <div key={count} className="animated-text animate">
         {count
           .toString()

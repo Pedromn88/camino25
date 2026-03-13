@@ -45,7 +45,6 @@ export function useGeolocation() {
         });
     }, []);
 
-    console.log(location);
 
     return {
         location,

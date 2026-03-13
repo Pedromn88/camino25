@@ -67,29 +67,10 @@ const Principal = () => {
     return () => unsubscribe();
   }, []);
 
-  const getCurrentLocation = (): Promise<{
-    latitude: number;
-    longitude: number;
-  } | null> => {
-    return new Promise((resolve) => {
-      if (!navigator.geolocation) {
-        resolve(null);
-        return;
-      }
 
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          resolve({
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-          });
-        },
-        () => resolve(null)
-      );
-    });
-  };
 
   const handleIncre = async (id: string) => {
+    setLoading(true)
     const coords = await getLocation();
 
     if (!coords) {
@@ -100,6 +81,7 @@ const Principal = () => {
       latitude: coords.latitude,
       longitude: coords.longitude,
     });
+    setLoading(false)
   };
   const handleDelete = async (id: string) => {
     await deleteCount(id);
@@ -116,7 +98,6 @@ const Principal = () => {
         <Grid container>
           <Grid size={12} className="flex-center-content">
             <CountCustom count={beer} type="beer" />
-
             <BeerIcon
               width="500"
               height="500"
@@ -125,7 +106,6 @@ const Principal = () => {
               fillOpacity="0.3"
               stroke="#333"
             />
-
             <ButtonCustom
               className="beer-button mt-3"
               background="#9f5d12"
@@ -163,7 +143,9 @@ const Principal = () => {
         </Grid>
       )}
 
-      {!loading && <MapLeaflet position={position} />}
+      {!loading &&
+        <MapLeaflet position={position} type="beer" />
+      }
     </div>
   );
 };

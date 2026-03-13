@@ -1,30 +1,120 @@
-
 /////////////BUTTON CUSTOM MENU
 
+$camino-purple: #4A1D7F;
+$camino-blue: #1E40AF;
+$camino-gold: #D99130;
+$camino-dark: #0F172A;
 
 
-
-.card-menu-principal-options {
+.container-menu-principal-options {
+  width: 100% !important;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-height: 200px;
-  border: 5px solid #5c5c5c;
-  box-shadow: 10px 10px 7px #0000001a;
   margin: 15px !important;
-  padding:0px 15px
+  padding: 0px 15px
 }
 
-.container-menu-principal-options {
+.card-menu-principal-options {
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin: 15px 0px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  color: #1e293b
+}
+
+.beer-color {
+  border: 2px solid $camino-gold;
+  border-left: 4px solid $camino-gold;
+}
+
+.octo-color {
+  border: 2px solid $camino-blue;
+  border-left: 4px solid $camino-blue;
+}
+
+.love-color {
+  border: 2px solid $camino-purple;
+  border-left: 4px solid $camino-purple;
+}
+
+.love-color {
+  border: 2px solid $camino-purple;
+  border-left: 4px solid $camino-purple;
+}
+
+.glass-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* shadow-md */
+}
+
+.glass-card:active {
+  transform: scale(0.95);
+}
+
+.avatar {
+  height: 4rem;
+  width: 4rem;
+  background-color: #FFFBEB;
+  border-radius: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  overflow: hidden;
+  margin-right: 1rem;
 }
 
-.card-link-message{
-  color: black;
-  text-decoration: none;
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.5rem;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.content h3 {
+  font-weight: bold;
+  font-size: 1.125rem;
+  /* lg */
+  color: #1E293B;
+  /* slate-800 */
+  margin: 0;
+}
+
+.content p {
+  font-size: 0.75rem;
+  /* xs */
+  color: #64748B;
+  /* slate-500 */
+  margin: 0;
+}
+
+.icon {
+  color: $camino-dark;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.glass-card:hover .icon {
+  opacity: 1;
 }
 
 
@@ -32,7 +122,7 @@
 ////// BUTTOM CUSTOM
 /// 
 /// 
-.button-custom{
+.button-custom {
   width: 240px;
   cursor: pointer !important;
 }
@@ -47,7 +137,11 @@
   align-items: center;
 }
 
-
+.tittle-count {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $camino-gold;
+}
 
 .count-number {
   display: inline-block;
@@ -57,24 +151,24 @@
   min-width: 30px;
   font-size: 64px;
   font-weight: 600;
-  color:"#fff"
+  color: "#333"
 }
 
-.octo{
-  background: #3c607d;
-  color: #fff;
+// .octo {
+//   background: #3c607d;
+//   color: #fff;
 
-}
+// }
 
-.beer{
-  background:rgb(159,93,18);
-    color: #fff
-} 
+// .beer {
+//   background: rgb(159, 93, 18);
+//   color: #fff
+// }
 
-.love {
-  background: #dd0873;
-  color: #fff
-}
+// .love {
+//   background: #dd0873;
+//   color: #fff
+// }
 
 .center-count {
   text-align: center;
@@ -114,6 +208,60 @@
   font-weight: 800;
 }
 
+.card-link-submessage {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #64748b
+}
+
+
+
+////////////FOOTER
+/// 
+/// 
+
+.bottom-nav {
+  width: 100%;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  /* gray-200 */
+  padding: 0.5rem 1.5rem 2rem 1.5rem;
+  /* pt-2 pb-8 px-6 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 50;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  /* gap-1 */
+  color: #94a3b8;
+  /* slate-400 */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.nav-btn span {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.nav-btn.active {
+  color: #7c3aed;
+  /* Camino purple */
+}
 
 @keyframes slide {
 

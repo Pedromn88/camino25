@@ -1,0 +1,38 @@
+$camino-purple: #4A1D7F;
+$camino-blue: #1E40AF;
+$camino-gold: #D99130;
+$camino-dark: #0F172A;
+
+.custom-marker-cluster {
+    background-color: #9f5d12;
+    border-radius: 50%;
+    width: 33px;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.container-title-map {
+    height: 50px;
+    border-radius: 10px;
+    width: 80%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.tittle-map {
+    color: $camino-blue;
+    font-weight: bold;
+}
+
+.letter-map {
+    color: $camino-gold;
+    font-weight: bold;
+}
