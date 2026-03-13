@@ -13,9 +13,13 @@ import LoveIcon from "../svg/LoveIcon";
 import OctopusIcon from "../svg/OctopusIcon";
 
 
+
 interface FixMapProps {
     position: [number, number][];
-    type: string;
+    type: string | string[];
+    total?: boolean,
+    width?: string,
+    height?: string
 }
 const createCustomClusterIcon = (cluster: any) => {
     return divIcon({
@@ -26,6 +30,7 @@ const createCustomClusterIcon = (cluster: any) => {
 }
 
 
+
 const MapFix = () => {
     const map = useMap();
     useEffect(() => {
@@ -34,10 +39,10 @@ const MapFix = () => {
     return null;
 };
 
-const MapLeaflet = ({ position, type }: FixMapProps) => {
-    console.log("🚀 ~ MapLeaflet ~ position:", position)
+const MapLeaflet = ({ position, type, height = "300px", width = "80%" }: FixMapProps) => {
     const [street, setStreet] = useState<string | null>(null);
 
+    console.log(type)
     const beerIcon = L.divIcon({
         html: renderToString(
             <BeerIcon
@@ -82,7 +87,27 @@ const MapLeaflet = ({ position, type }: FixMapProps) => {
     });
 
 
+    const hotelIcon = L.divIcon({
+        html: renderToString(
+            <img src="/hotel-icon.png" alt="hotel" />
+        ),
+        className: "",
+        iconSize: [40, 40],
+        iconAnchor: [20, 40]
+    });
+
+    const barIcon = L.divIcon({
+        html: renderToString(
+            <img src="/bar-icon.png" alt="bar" />
+        ),
+        className: "",
+        iconSize: [40, 40],
+        iconAnchor: [20, 40]
+    });
+
+
     const getIcon = (type: string) => {
+        console.log("🚀 ~ getIcon ~ type:", type)
         switch (type) {
             case "beer":
                 return beerIcon;
@@ -90,6 +115,10 @@ const MapLeaflet = ({ position, type }: FixMapProps) => {
                 return loveIcon;
             case "octo":
                 return octoIcon;
+            case "hostel":
+                return hotelIcon;
+            case "bar":
+                return barIcon;
             default:
                 return;
         }
@@ -110,17 +139,20 @@ const MapLeaflet = ({ position, type }: FixMapProps) => {
     };
 
 
+
     return (
         <>
+
             <div className="container-title-map" >
                 <p className="tittle-map">Donde nos tocó estar</p>
                 <p className="letter-map">O Camiño apretao 2026</p>
             </div>
+
             <MapContainer
                 center={position?.[0]}
                 zoom={13}
                 scrollWheelZoom={false}
-                style={{ height: "300px", borderRadius: "10px", width: "80%" }}
+                style={{ height: height, borderRadius: "10px", width: width }}
 
             >
                 <TileLayer
@@ -129,7 +161,7 @@ const MapLeaflet = ({ position, type }: FixMapProps) => {
                 />
                 <MarkerClusterGroup chunkedLoading iconCreateFunction={createCustomClusterIcon}>
                     {position?.map((item: [number, number], index: number) => (
-                        <Marker key={index} position={item} icon={getIcon(type)}
+                        <Marker key={index} position={item} icon={typeof type === "string" ? getIcon(type) : getIcon(type[index])}
                             eventHandlers={{
                                 click: () => handleMarkerClick(item[0], item[1], setStreet)
                             }}>

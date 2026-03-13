@@ -11,8 +11,8 @@ const MapLeaflet = dynamic(() => import("../Component/map/map"), {
 const MapTotal = () => {
 
     return (
-        <div>
-            {mapHostel.length > 0 && <MapLeaflet position={mapHostel.map((item) => [item.latitude, item.longitude])} type="beer" />}
+        <div className="flex-center flex-column"    >
+            {mapHostel.length > 0 && <MapLeaflet height="70vh" width="90%" position={mapHostel.map((item) => [item.latitude, item.longitude])} type={mapHostel.map((item) => item.type)} />}
         </div>
     );
 };
