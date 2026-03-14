@@ -93,14 +93,16 @@ const OctoCounter = () => {
         <Grid container className="w-100">
           <Grid size={12} className="flex-center-content w-100">
             <CountCustom count={octa} type="octo" />
-            <OctopusIcon
-              width="350"
-              height="350"
-              fill="#3c607d"
-              stroke="#333"
-              fillHeight={fillHeightOcto}
-              fillOpacity="0.3"
-            />
+            <div className={`flex-center constainer-icon-count octo-bg-color`}>
+              <OctopusIcon
+                width="320"
+                height="320"
+                fill="#3c607d"
+                stroke="#333"
+                fillHeight={fillHeightOcto}
+                fillOpacity="0.3"
+              />
+            </div>
             <ButtonCustom
               className=" mt-3"
               background="#1a476bff"
@@ -138,7 +140,7 @@ const OctoCounter = () => {
         </Grid>
       )}
       {!loading &&
-        <MapLeaflet position={position} type="octo" />
+        <MapLeaflet position={position} type="octo" width="100%" />
       }
     </div>
   );

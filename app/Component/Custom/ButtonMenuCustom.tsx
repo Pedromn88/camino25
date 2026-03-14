@@ -24,9 +24,9 @@ const ButtonMenuCustom: React.FC<ButtonMenuProps> = ({
   tab,
 }) => {
   return (
-    <Grid size={12}>
+    <Grid size={12} className="w-100">
       <Link href={link} className={`card-menu-principal-options ${tab === "octo" ? "octo-color" : tab === "beer" ? "beer-color" : "love-color"}`}>
-        <div className="avatar">
+        <div className={`avatar ${tab === "octo" ? "octo-bg-color" : tab === "beer" ? "beer-bg-color" : "love-bg-color"}`}>
           <img
             sizes={sizes ?? "10vw"}
             width={0}

@@ -1,7 +1,9 @@
 :root {
-  --background: #ffffff;
+  --background: f5f5f5;
   --foreground: #171717;
 }
+
+
 
 
 html,
@@ -18,7 +20,7 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--foreground);
-  background: rgb(249, 250, 251, 1);
+  background: #f5f5f5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -72,8 +74,11 @@ a {
 }
 
 .icon-options {
-  border-bottom: 1px solid black;
-  width: 100%
+  margin: 15px 0px;
+  padding: 15px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
 }
 
 .mt-3 {
@@ -92,6 +97,17 @@ a {
   padding-bottom: 30px;
 }
 
+.p-relative {
+  position: relative;
+}
+
+.p-absolute {
+  position: absolute;
+}
+
+.p-fixed {
+  position: fixed;
+}
 
 
 .bh {
@@ -240,4 +256,39 @@ a:hover {
   width: 100%;
   height: auto;
   border-radius: 20px;
+}
+
+.constainer-icon-count {
+
+  border-radius: 100%;
+  padding: 15px
+}
+
+.beer-bg-color {
+  background: #8567584f;
+  border: 3px solid #D99130;
+}
+
+.octo-bg-color {
+  background: #3c607d4f;
+  border: 3px solid #1E40AF;
+  padding: 15px;
+}
+
+.love-bg-color {
+  background: #c257774f;
+  border: 3px solid #dd0873;
+  padding: 15px;
+}
+
+.flex-center-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-buttom-options {
+  width: 100% !important;
+  margin-top: 15px;
 }

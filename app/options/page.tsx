@@ -1,265 +1,207 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import getCount from "../Component/getFire";
-import React from "react";
 import ButtonCustom from "../Component/Custom/ButtonCustom";
 import { Grid, TextField } from "@mui/material";
-import incrementCount from "../Component/postFire";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
 import OctopusIcon from "../Component/svg/OctopusIcon";
 import BeerIcon from "../Component/svg/BeerIcon";
 import LoveIcon from "../Component/svg/LoveIcon";
 import IconWarning from "../Component/svg/WarningIcon";
 import Link from "next/link";
+import { useInitial } from "../Component/Custom/hooks/useInitial";
 
 const Principal = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [octoCount, setOctoCount] = useState<number>(0);
-  const [octoLimit, setOctoLimit] = useState<number>(0);
-  const [beerCount, setBeerCount] = useState<number>(0);
-  const [beerLimit, setBeerLimit] = useState<number>(0);
-  const [loveCount, setLoveCount] = useState<number>(0);
-  const [loveLimit, setLoveLimit] = useState<number>(0);
+  const {
+    loading: loadingOcto,
+    count: octoCount,
+    limit: octoLimit,
+    setLimit: setOctoLimit,
+    saveLimit: newLimitOcto,
+  } = useInitial("octopus");
 
-  ///////OCTO
-  const handleCountOcto = async () => {
-    try {
-      const aux: { count?: number; limits?: number } = await getCount(
-        "octopus"
-      );
-      return {
-        count: aux.count ?? 0,
-        limits: aux.limits ?? 0,
-      };
-    } catch {
-      return null;
-    }
-  };
+  const {
+    loading: loadingBeer,
+    count: beerCount,
+    limit: beerLimit,
+    setLimit: setBeerLimit,
+    saveLimit: newLimitBeer,
+  } = useInitial("beer");
 
-  const handleInitialOcto = async () => {
-    setLoading(true);
-    const res = await handleCountOcto();
-    setOctoLimit(res?.limits ?? 0);
-    setOctoCount(res?.count ?? 0);
-    setLoading(false);
-  };
+  const {
+    loading: loadingLove,
+    count: loveCount,
+    limit: loveLimit,
+    setLimit: setLoveLimit,
+    saveLimit: newLimitLove,
+  } = useInitial("love");
 
-  const newLimitOcto = async (id: string) => {
-    setLoading(true);
-    await incrementCount(id, "limits", octoLimit, null);
-    setLoading(false);
-  };
-
-  //////////BEER
-  const handleCountBeer = async () => {
-    try {
-      const aux: { count?: number; limits?: number } = await getCount("beer");
-      return {
-        count: aux.count ?? 0,
-        limits: aux.limits ?? 0,
-      };
-    } catch {
-      return null;
-    }
-  };
-
-  const handleinitialBeer = async () => {
-    setLoading(true);
-    const res = await handleCountBeer();
-    if (res) {
-      setBeerLimit(res?.limits ?? 0);
-      setBeerCount(res.count ?? 0);
-    }
-    setLoading(false);
-  };
-
-  const newLimitBeer = async (id: string) => {
-    setLoading(true);
-    await incrementCount(id, "limits", beerLimit, null);
-    setLoading(false);
-  };
-
-  ////////////LOVE
-  const handleCountLove = async () => {
-    try {
-      const aux: { count?: number; limits?: number } = await getCount("love");
-      return {
-        count: aux.count ?? 0,
-        limits: aux.limits ?? 0,
-      };
-    } catch {
-      return null;
-    }
-  };
-
-  const handleinitialLove = async () => {
-    setLoading(true);
-    const res = await handleCountLove();
-    if (res) {
-      setLoveLimit(res?.limits ?? 0);
-      setLoveCount(res?.count ?? 0);
-    }
-    setLoading(false);
-  };
-
-  const newLimitLove = async (id: string) => {
-    setLoading(true);
-    await incrementCount(id, "limits", loveLimit, null);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    handleInitialOcto();
-    handleinitialBeer();
-    handleinitialLove();
-  }, []);
+  const loading = loadingOcto || loadingBeer || loadingLove;
 
   return (
     <Grid container className="container-button-options">
       {loading && <LoadingCustom message={"Cargando"} loading={loading} />}
       {!loading && (
         <>
-          <span className="icon-options flex-between">
-            <Link href="/octoCounter">
-              <OctopusIcon
-                width="75"
-                height="75"
-                fillHeight={0}
-                fillOpacity="1"
-              />
-            </Link>
-            {octoCount >= octoLimit * 0.9 && (
-              <IconWarning width="35" height="35" />
-            )}
-          </span>
           <Grid size={12} className="flex-center mt-3">
-            <TextField
-              disabled={octoLimit === octoCount}
-              className="textfield-options"
-              id="outlined-required"
-              label="Máx Pulpo"
-              value={octoLimit}
-              onChange={(e) => setOctoLimit(Number(e.target.value))}
-              /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, "");
-              }}*/
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    border: "2px solid #3c607d",
-                  },
-                  "&:hover fieldset": {
-                    border: "3px solid #3c607d",
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: "3px solid #3c607d",
-                  },
-                },
-                "& label": {
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  color: "#3c607d",
-                },
-              }}
-            />
-            <ButtonCustom
-              icon={null}
-              className="octo-button"
-              background="#3c607d"
-              onClick={() => newLimitOcto("octopus")}
-              message="Guardar"
-            />
+            <span className="icon-options flex">
+              <span className="flex-beetween mb-3">
+                <div className={`avatar  octo-bg-color `}>
+                  <OctopusIcon
+                    width="25"
+                    height="25"
+                    fillHeight={0}
+                    fillOpacity="1"
+                  />
+                </div>
+                {octoCount >= octoLimit * 0.9 && (
+                  <IconWarning width="35" height="35" />
+                )}
+                <h3 className="octo-letter">Límite Pulpometro</h3>
+              </span>
+              <span className="w-100 flex-column">
+                <TextField
+                  fullWidth
+                  disabled={octoLimit === octoCount}
+                  className="textfield-options mb-3"
+                  id="outlined-required"
+                  label="Máx Pulpo"
+                  value={octoLimit}
+                  onChange={(e) => setOctoLimit(Number(e.target.value))}
+                  /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                  }}*/
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        border: "2px solid #3c607d",
+                      },
+                      "&:hover fieldset": {
+                        border: "3px solid #3c607d",
+                      },
+                      "&.Mui-focused fieldset": {
+                        border: "3px solid #3c607d",
+                      },
+                    },
+                    "& label": {
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "#3c607d",
+                    },
+                  }}
+                />
+                <ButtonCustom
+                  icon={null}
+                  className="octo-button custom-buttom-options"
+                  background="#3c607d"
+                  onClick={newLimitOcto}
+                  message="Guardar"
+                />
+              </span>
+            </span>
           </Grid>
-          <span className="icon-options flex-beetween  flex-reverse mt-3">
-            <Link href="/beerCounter">
-              <BeerIcon width="75" height="75" fillHeight={0} fillOpacity="1" />
-            </Link>
-            {beerCount >= beerLimit * 0.9 && (
-              <IconWarning width="35" height="35" />
-            )}
-          </span>
           <Grid size={12} className="flex-center mt-3">
-            <TextField
-              className="textfield-options"
-              id="outlined-required"
-              label="Máx Birra"
-              value={beerLimit}
-              onChange={(e) => setBeerLimit(Number(e.target.value))}
-              /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                e.target.value = e.target.value.replace(/[^0-9]/g, "");
-              }}*/
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    border: "2px solid #9f5d12",
-                  },
-                  "&:hover fieldset": {
-                    border: "3px solid #9f5d12",
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: "3px solid #9f5d12",
-                  },
-                },
-                "& label": {
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  color: "#9f5d12",
-                },
-              }}
-            />
-            <ButtonCustom
-              icon={null}
-              className="octo-button "
-              background="#9f5d12"
-              onClick={() => newLimitBeer("beer")}
-              message="Guardar"
-            />
+            <span className="icon-options flex">
+              <span className="flex-beetween mb-3">
+                <div className="avatar  beer-bg-color" >
+                  <BeerIcon width="75" height="75" fillHeight={0} fillOpacity="1" />
+
+                </div>
+                {beerCount >= beerLimit * 0.9 && (
+                  <IconWarning width="35" height="35" />
+                )}
+                <h3 className="beer-letter">Límite Birra </h3>
+              </span>
+              <span className="w-100 flex-column">
+                <TextField
+                  fullWidth
+                  className="textfield-options mb-3"
+                  id="outlined-required"
+                  label="Máx Birra"
+                  value={beerLimit}
+                  onChange={(e) => setBeerLimit(Number(e.target.value))}
+                  /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                  }}*/
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        border: "2px solid #9f5d12",
+                      },
+                      "&:hover fieldset": {
+                        border: "3px solid #9f5d12",
+                      },
+                      "&.Mui-focused fieldset": {
+                        border: "3px solid #9f5d12",
+                      },
+                    },
+                    "& label": {
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "#9f5d12",
+                    },
+                  }}
+                />
+                <ButtonCustom
+                  icon={null}
+                  className="octo-button custom-buttom-options "
+                  background="#9f5d12"
+                  onClick={newLimitBeer}
+                  message="Guardar"
+                />
+              </span>
+            </span>
           </Grid>
-          <span className="icon-options mt-3 flex-beetween">
-            <Link href="/loveCounter">
-              <LoveIcon width="75" height="75" fillHeight={0} fillOpacity="1" />
-            </Link>
-            {loveCount >= loveLimit * 0.9 && (
-              <IconWarning width="35" height="35" />
-            )}
-          </span>
           <Grid size={12} className="flex-center mt-3">
-            <TextField
-              className="textfield-options"
-              id="outlined-required"
-              label="Máx Loved"
-              value={loveLimit}
-              onChange={(e) => setLoveLimit(Number(e.target.value))}
-              /*  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                }}*/
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    border: "2px solid #dd0873",
-                  },
-                  "&:hover fieldset": {
-                    border: "3px solid #dd0873",
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: "3px solid #dd0873",
-                  },
-                },
-                "& label": {
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  color: "#dd0873",
-                },
-              }}
-            />
-            <ButtonCustom
-              icon={null}
-              className="octo-button "
-              background="#dd0873"
-              onClick={() => newLimitLove("love")}
-              message="Guardar"
-            />
+            <span className="icon-options flex">
+              <span className="flex-beetween mb-3">
+                <div className="avatar  love-bg-color" >
+                  <LoveIcon width="75" height="75" fillHeight={0} fillOpacity="1" />
+                </div>
+                {loveCount >= loveLimit * 0.9 && (
+                  <IconWarning width="35" height="35" />
+                )}
+                <h3 className="love-letter">Límite Mencantas </h3>
+              </span>
+
+              <span className="w-100 flex-column">
+                <TextField
+                  fullWidth
+                  className="textfield-options"
+                  id="outlined-required mb-3"
+                  label="Máx Loved"
+                  value={loveLimit}
+                  onChange={(e) => setLoveLimit(Number(e.target.value))}
+                  /*  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                    }}*/
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        border: "2px solid #dd0873",
+                      },
+                      "&:hover fieldset": {
+                        border: "3px solid #dd0873",
+                      },
+                      "&.Mui-focused fieldset": {
+                        border: "3px solid #dd0873",
+                      },
+                    },
+                    "& label": {
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "#dd0873",
+                    },
+                  }}
+                />
+                <ButtonCustom
+                  icon={null}
+                  className="octo-button custom-buttom-options"
+                  background="#dd0873"
+                  onClick={newLimitLove}
+                  message="Guardar"
+                />
+              </span>
+            </span>
           </Grid>
         </>
       )}
@@ -268,3 +210,4 @@ const Principal = () => {
 };
 
 export default Principal;
+

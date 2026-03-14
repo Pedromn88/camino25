@@ -146,11 +146,11 @@ const MapLeaflet = ({ position, type, height = "300px", width = "80%" }: FixMapP
                 center={position?.[0]}
                 zoom={13}
                 scrollWheelZoom={false}
-                style={{ height: height, borderRadius: "10px", width: width }}
+                style={{ height: height, borderRadius: "0 0 10px 10px", width: width }}
 
             >
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    attribution=' <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <MarkerClusterGroup chunkedLoading iconCreateFunction={createCustomClusterIcon}>

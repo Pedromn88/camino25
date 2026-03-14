@@ -1,6 +1,6 @@
 /////////////BUTTON CUSTOM MENU
 
-$camino-purple: #4A1D7F;
+$camino-purple: #dd0873;
 $camino-blue: #1E40AF;
 $camino-gold: #D99130;
 $camino-dark: #0F172A;
@@ -72,8 +72,7 @@ $camino-dark: #0F172A;
 .avatar {
   height: 4rem;
   width: 4rem;
-  background-color: #FFFBEB;
-  border-radius: 1rem;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -188,7 +187,6 @@ $camino-dark: #0F172A;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
 
 }
 

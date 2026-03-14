@@ -13,7 +13,7 @@ const Header = () => {
         </Link>
       </div>
       <div>
-        <Link href="/">
+        <Link href="/" className="flex-center-column">
           <p className="title-header">O CAMIÑO</p>
           <small className="subtitle-header">2026</small>
         </Link>

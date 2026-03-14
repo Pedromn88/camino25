@@ -19,12 +19,13 @@ $camino-dark: #0F172A;
 
 .container-title-map {
     height: 50px;
-    border-radius: 10px;
-    width: 80%;
+    border-radius: 0 0 10px 10px;
+    width: 100%;
     background-color: #fff;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 15px;
 }
 
 .tittle-map {

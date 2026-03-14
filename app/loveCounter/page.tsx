@@ -34,7 +34,7 @@ const LoveCounter = () => {
   const [limit, setLimit] = useState<number>(0);
   const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
   const { getLocation } = useGeolocation();
-  const docRef = doc(db, "counter", "octopus");
+  const docRef = doc(db, "counter", "love");
 
   useEffect(() => {
     setLoading(true);
@@ -92,19 +92,21 @@ const LoveCounter = () => {
         <LoadingCustom message="Cargando pulpómetro" loading={loading} />
       )}
       {!loading && (
-        <Grid container>
+        <Grid container className="w-100">
           <Grid size={12} className="flex-between-column">
             <CountCustom count={love} type="love" />
-            <LoveIcon
-              width="350"
-              height="350"
-              fillHeight={fillHeightLove}
-              fillOpacity="0.3"
-            />
+            <div className={`flex-center constainer-icon-count love-bg-color mb-3`}  >
 
+              <LoveIcon
+                width="350"
+                height="350"
+                fillHeight={fillHeightLove}
+                fillOpacity="0.3"
+              />
+            </div>
             <ButtonCustom
               className="octo-button"
-              background="#860345ff"
+              background="#962a60ff"
               onClick={() => handleIncre("love")}
               icon={
                 <LoveIcon
@@ -120,7 +122,7 @@ const LoveCounter = () => {
             />
 
             <ButtonCustom
-              background="#8f4168ff"
+              background="#96667eff"
               className="octo-button mt-3 mb-3 flex-beetween"
               onClick={() => handleDelete("love")}
               icon={
@@ -139,7 +141,7 @@ const LoveCounter = () => {
         </Grid>
       )}
       {!loading &&
-        <MapLeaflet position={position} type="love" />
+        <MapLeaflet position={position} type="love" width="100%" />
       }
     </div>
   );

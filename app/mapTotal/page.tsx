@@ -12,7 +12,7 @@ const MapTotal = () => {
 
     return (
         <div className="flex-center flex-column pt-3 pb-3" >
-            {mapHostel.length > 0 && <MapLeaflet height="70vh" width="90%" position={mapHostel.map((item) => [item.latitude, item.longitude])} type={mapHostel.map((item) => item.type)} />}
+            {mapHostel.length > 0 && <MapLeaflet height="70vh" width="100%" position={mapHostel.map((item) => [item.latitude, item.longitude])} type={mapHostel.map((item) => item.type)} />}
         </div>
     );
 };

@@ -1,6 +1,11 @@
+$camino-purple: #4A1D7F;
+$camino-blue: #1E40AF;
+$camino-gold: #D99130;
+$camino-dark: #0F172A;
+
 .header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background-color: rgb(255 255 255 / 0.8);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -10,15 +15,15 @@
 
 .title-header {
   font-family: Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #4a1d7f;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: $camino-purple;
   line-height: 1.75rem;
 }
 
 .subtitle-header {
   font-size: 1rem;
-  font-weight: 600;
-  color: #4a1d7f;
+  font-weight: 700;
+  color: $camino-gold;
   line-height: 1.5rem;
 }

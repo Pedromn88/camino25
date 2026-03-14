@@ -100,17 +100,21 @@ const BeerCount = () => {
         <Grid container className="w-100">
           <Grid size={12} className="flex-center-content">
             <CountCustom count={beer} type="beer" />
-            <BeerIcon
-              width="500"
-              height="500"
-              fill="#9f5d12"
-              fillHeight={fillHeightBeer}
-              fillOpacity="0.3"
-              stroke="#333"
-            />
+
+            <div className={`flex-center constainer-icon-count beer-bg-color`}  >
+              <BeerIcon
+                width="350"
+                height="350"
+                fill="#9f5d12"
+                fillHeight={fillHeightBeer}
+                fillOpacity="0.3"
+                stroke="#333"
+              />
+            </div>
+
             <ButtonCustom
               className="beer-button mt-3"
-              background="#221610"
+              background="#754c37ff"
               onClick={() => handleIncre("beer")}
               icon={
                 <BeerIcon
@@ -127,7 +131,7 @@ const BeerCount = () => {
 
             <ButtonCustom
               className="beer-button mt-3 mb-3 flex-reverse"
-              background="#4a3728"
+              background="#947761ff"
               onClick={() => handleDelete("beer")}
               icon={
                 <BeerIcon
@@ -146,7 +150,7 @@ const BeerCount = () => {
       )}
 
       {!loading &&
-        <MapLeaflet position={position} type="beer" />
+        <MapLeaflet position={position} type="beer" width="100%" />
       }
     </div>
   );
