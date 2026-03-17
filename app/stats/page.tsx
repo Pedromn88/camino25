@@ -21,6 +21,14 @@ export type TravelStage = {
 };
 
 
+type Item = {
+    type: string;
+    loading: boolean;
+    count: number;
+    limit: number;
+    setLimit: React.Dispatch<React.SetStateAction<number>>;
+    saveLimit: () => Promise<void>;
+};
 
 const Stats = () => {
     const [stages, setStages] = useState<TravelStage[]>([]);
@@ -30,23 +38,32 @@ const Stats = () => {
     const beer = useInitial("beer");
     const love = useInitial("love");
 
-    const items = [
-        ["octopus", octo],
-        ["beer", beer],
-        ["love", love],
-    ].map(
-        ([type, data]): {
-            type: string;
-            loading: boolean;
-            count: number;
-            limit: number;
-            setLimit: React.Dispatch<React.SetStateAction<number>>;
-            saveLimit: () => Promise<void>;
-        } => ({
-            type,
-            ...data,
-        })
-    );
+    const items: Item[] = [
+        {
+            type: "octopus",
+            loading: octo.loading,
+            count: octo.count,
+            limit: octo.limit,
+            setLimit: octo.setLimit,
+            saveLimit: octo.saveLimit,
+        },
+        {
+            type: "beer",
+            loading: beer.loading,
+            count: beer.count,
+            limit: beer.limit,
+            setLimit: beer.setLimit,
+            saveLimit: beer.saveLimit,
+        },
+        {
+            type: "love",
+            loading: love.loading,
+            count: love.count,
+            limit: love.limit,
+            setLimit: love.setLimit,
+            saveLimit: love.saveLimit,
+        },
+    ];
 
 
     const handleInitial = async () => {
