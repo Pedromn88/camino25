@@ -140,7 +140,7 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%" }: FixMap
     return (
         <>
             <Grid container className="w-100">
-                <Grid size={12} className="container-title-map w-100" >
+                <Grid size={12} className="container-title-map " >
                     <p className="tittle-map">Donde estamos</p>
                     <p className="letter-map">O Camiño apretao 2026</p>
                 </Grid>
