@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   getFirestore,
   doc,
@@ -30,6 +30,7 @@ interface BeerResponse {
 const db = getFirestore(app);
 
 const BeerCount = () => {
+  const firstLoad = useRef(true);
   const [beer, setBeer] = useState<number>(0);
   const [limit, setLimit] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
@@ -40,7 +41,6 @@ const BeerCount = () => {
 
   useEffect(() => {
     setLoading(true);
-
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data() as BeerResponse;
@@ -61,9 +61,8 @@ const BeerCount = () => {
       }
 
       setLoading(false);
+      firstLoad.current = false;
     });
-
-
     return () => unsubscribe();
   }, []);
 
@@ -92,11 +91,11 @@ const BeerCount = () => {
 
   return (
     <div className="flex-center flex-column pb-3">
-      {loading && (
+      {loading && firstLoad.current && (
         <LoadingCustom message="Cargando estrellómetro" loading={true} />
       )}
 
-      {!loading && (
+      {!firstLoad.current && (
         <Grid container className="w-100">
           <Grid size={12} className="flex-center-content">
             <CountCustom count={beer} type="beer" />
@@ -149,7 +148,7 @@ const BeerCount = () => {
         </Grid>
       )}
 
-      {!loading &&
+      {!firstLoad.current &&
         <MapLeaflet position={position} type="beer" width="100%" />
       }
     </div>

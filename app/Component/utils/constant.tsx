@@ -1,5 +1,6 @@
 interface Item {
-    type: 'beer' | 'love' | 'octo';
+    type: 'beer' | 'love' | 'octopus' | 'km';
+    title: string;
     count: number;
 }
 
@@ -11,16 +12,24 @@ interface mapHostel {
 }
 
 
-const lastYear: Item[] = [{
+export const lastYear: Item[] = [{
+    type: 'km',
+    title: "Kilómetros Totales",
+    count: 151
+}, {
     type: 'beer',
+    title: "Birras Totales",
     count: 300
 }, {
     type: 'love',
-    count: 4
+    title: "Me Encantas Totales",
+    count: 68
 }, {
-    type: 'octo',
+    type: 'octopus',
+    title: "Pulpitos Totales",
     count: 8
 }
+
 ]
 
 export const mapHostel: mapHostel[] = [

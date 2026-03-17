@@ -11,6 +11,7 @@ import { divIcon, point } from "leaflet";
 import "./styleMap.scss";
 import LoveIcon from "../svg/LoveIcon";
 import OctopusIcon from "../svg/OctopusIcon";
+import { Grid } from "@mui/material";
 
 
 
@@ -39,7 +40,7 @@ const MapFix = () => {
     return null;
 };
 
-const MapLeaflet = ({ position, type, height = "300px", width = "80%" }: FixMapProps) => {
+const MapLeaflet = ({ position, type, height = "300px", width = "100%" }: FixMapProps) => {
     const [street, setStreet] = useState<string | null>(null);
 
     const beerIcon = L.divIcon({
@@ -138,34 +139,36 @@ const MapLeaflet = ({ position, type, height = "300px", width = "80%" }: FixMapP
 
     return (
         <>
-            <div className="container-title-map" >
-                <p className="tittle-map">Donde nos tocó estar</p>
-                <p className="letter-map">O Camiño apretao 2026</p>
-            </div>
-            <MapContainer
-                center={position?.[0]}
-                zoom={13}
-                scrollWheelZoom={false}
-                style={{ height: height, borderRadius: "0 0 10px 10px", width: width }}
+            <Grid container className="w-100">
+                <Grid size={12} className="container-title-map w-100" >
+                    <p className="tittle-map">Donde estamos</p>
+                    <p className="letter-map">O Camiño apretao 2026</p>
+                </Grid>
+                <MapContainer
+                    center={position?.[0]}
+                    zoom={13}
+                    scrollWheelZoom={false}
+                    style={{ height: height, borderRadius: "0 0 10px 10px", width: width }}
 
-            >
-                <TileLayer
-                    attribution=' <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <MarkerClusterGroup chunkedLoading iconCreateFunction={createCustomClusterIcon}>
-                    {position?.map((item: [number, number], index: number) => (
-                        <Marker key={index} position={item} icon={typeof type === "string" ? getIcon(type) : getIcon(type[index])}
-                            eventHandlers={{
-                                click: () => handleMarkerClick(item[0], item[1], setStreet)
-                            }}>
-                            <Popup>{street || "Buscando calle..."}</Popup>
-                        </Marker>
+                >
+                    <TileLayer
+                        attribution=' <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <MarkerClusterGroup chunkedLoading iconCreateFunction={createCustomClusterIcon}>
+                        {position?.map((item: [number, number], index: number) => (
+                            <Marker key={index} position={item} icon={typeof type === "string" ? getIcon(type) : getIcon(type[index])}
+                                eventHandlers={{
+                                    click: () => handleMarkerClick(item[0], item[1], setStreet)
+                                }}>
+                                <Popup>{street || "Buscando calle..."}</Popup>
+                            </Marker>
 
-                    ))}
-                </MarkerClusterGroup>
-                <MapFix />
-            </MapContainer>
+                        ))}
+                    </MarkerClusterGroup>
+                    <MapFix />
+                </MapContainer>
+            </Grid>
         </>
     );
 };

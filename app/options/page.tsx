@@ -37,6 +37,7 @@ const Principal = () => {
 
   const loading = loadingOcto || loadingBeer || loadingLove;
 
+  console.log("🚀 ~ Principal ~ beerCount >= beerLimit:", beerCount, beerLimit)
   return (
     <Grid container className="container-button-options">
       {loading && <LoadingCustom message={"Cargando"} loading={loading} />}
@@ -61,15 +62,19 @@ const Principal = () => {
               <span className="w-100 flex-column">
                 <TextField
                   fullWidth
-                  disabled={octoLimit === octoCount}
+                  disabled={octoLimit === octoCount && octoLimit !== 0}
                   className="textfield-options mb-3"
                   id="outlined-required"
                   label="Máx Pulpo"
                   value={octoLimit}
-                  onChange={(e) => setOctoLimit(Number(e.target.value))}
-                  /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                  }}*/
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setOctoLimit(value === "" ? 0 : Number(value));
+                  }}
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]*",
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
@@ -118,10 +123,14 @@ const Principal = () => {
                   id="outlined-required"
                   label="Máx Birra"
                   value={beerLimit}
-                  onChange={(e) => setBeerLimit(Number(e.target.value))}
-                  /*onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                  }}*/
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setBeerLimit(value === "" ? 0 : Number(value));
+                  }}
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]*",
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {
@@ -170,10 +179,14 @@ const Principal = () => {
                   id="outlined-required mb-3"
                   label="Máx Loved"
                   value={loveLimit}
-                  onChange={(e) => setLoveLimit(Number(e.target.value))}
-                  /*  onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                    }}*/
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setLoveLimit(value === "" ? 0 : Number(value));
+                  }}
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]*",
+                  }}
                   sx={{
                     "& .MuiOutlinedInput-root": {
                       "& fieldset": {

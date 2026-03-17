@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useCallback, useEffect } from "react";
 import getCount from "../../getFire";
 import incrementCount from "../../postFire";

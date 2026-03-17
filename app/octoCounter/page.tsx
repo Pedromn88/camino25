@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import getCount from "../Component/getFire";
 import incrementCount from "../Component/postFire";
 import deleteCount from "../Component/deleteFire";
@@ -27,6 +27,8 @@ interface octoResponse {
 
 
 const OctoCounter = () => {
+  const firstLoad = useRef(true);
+
   const [octa, setOcta] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
@@ -58,9 +60,8 @@ const OctoCounter = () => {
       }
 
       setLoading(false);
+      firstLoad.current = false;
     });
-
-
     return () => unsubscribe();
   }, []);
 
@@ -86,10 +87,10 @@ const OctoCounter = () => {
 
   return (
     <div className="flex-center flex-column pb-3">
-      {loading && (
+      {loading && firstLoad.current && (
         <LoadingCustom message="Cargando pulpómetro" loading={loading} />
       )}
-      {!loading && (
+      {!firstLoad.current && (
         <Grid container className="w-100">
           <Grid size={12} className="flex-center-content w-100">
             <CountCustom count={octa} type="octo" />
@@ -139,7 +140,7 @@ const OctoCounter = () => {
           </Grid>
         </Grid>
       )}
-      {!loading &&
+      {!firstLoad.current &&
         <MapLeaflet position={position} type="octo" width="100%" />
       }
     </div>

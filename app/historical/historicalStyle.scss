@@ -1,0 +1,73 @@
+$camino-purple: #4A1D7F;
+$camino-blue: #1E40AF;
+$camino-gold: #D99130;
+$camino-dark: #0F172A;
+$camino-green: #8bc34a;
+
+.title-stats {
+    color: $camino-dark;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.card-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 5px 0px
+}
+
+.avatar-stats {
+    margin-right: 0px !important;
+    padding: 0.2rem;
+    height: 3rem;
+    width: 3rem;
+
+
+}
+
+.letter-stats-next {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.card-progress-stats {
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    margin: 15px 0px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    color: #1e293b;
+    background-color: #fff;
+}
+
+.card-stats-complete {
+    // border: 2px solid green;
+    background: rgba(0, 128, 0, 0.1);
+
+}
+
+.card-stats-next {
+    // border: 2px solid blue;
+    background: rgba(0, 0, 255, 0.1);
+
+}
+
+.km-bg-color {
+    background-color: #8bc34a63;
+    border: 3px solid $camino-green;
+}

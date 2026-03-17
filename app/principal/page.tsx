@@ -1,8 +1,26 @@
+
 "use client";
+
+import { useEffect } from "react";
 import { Grid } from "@mui/material";
 import ButtonMenuCustom from "../Component/Custom/ButtonMenuCustom";
+import getConfig from "../Component/getConfig";
+import PostTravel from "../Component/getStages";
 
 const Principal = () => {
+
+  const handleInitial = async () => {
+    await PostTravel()
+    const res = await getConfig();
+    sessionStorage.setItem("map", res.map?.toString() ?? "false");
+    sessionStorage.setItem("security", res.security?.toString() ?? "false");
+    sessionStorage.setItem("total", res.total?.toString() ?? "0");
+  };
+
+  useEffect(() => {
+    handleInitial();
+  }, []);
+
   return (
     <Grid container className="container-menu-principal-options">
       <Grid size={{ xs: 12 }}>

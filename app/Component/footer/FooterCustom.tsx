@@ -31,14 +31,14 @@ const FooterCustom = () => {
           <span>STATS</span>
         </Link>
 
-        <button className="nav-btn">
+        <Link href="/historical" className="nav-btn">
           <svg fill="none" height="24" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
             viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
           <span>HISTORIA</span>
-        </button>
+        </Link>
       </nav>
     </footer>
   );
