@@ -93,7 +93,7 @@ const OctoCounter = () => {
       {!firstLoad.current && (
         <Grid container className="w-100">
           <Grid size={12} className="flex-center-content w-100">
-            <CountCustom count={octa} type="octo" />
+            <CountCustom count={octa} type="octo" loading={loading} />
             <div className={`flex-center constainer-icon-count octo-bg-color`}>
               <OctopusIcon
                 width="320"
@@ -105,6 +105,7 @@ const OctoCounter = () => {
               />
             </div>
             <ButtonCustom
+              disabled={loading}
               className=" mt-3"
               background="#1a476bff"
               onClick={() => handleIncre("octopus")}
@@ -122,6 +123,7 @@ const OctoCounter = () => {
             />
 
             <ButtonCustom
+              disabled={loading}
               background="#719abbff"
               className="octo-button mt-3 mb-3 flex-reverse"
               onClick={() => handleDelete("octopus")}

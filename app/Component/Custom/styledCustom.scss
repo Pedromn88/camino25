@@ -277,6 +277,10 @@ $camino-dark: #0F172A;
   color: $camino-purple !important;
 }
 
+.count-number {
+  min-height: 85px;
+}
+
 @keyframes slide {
 
   0%,

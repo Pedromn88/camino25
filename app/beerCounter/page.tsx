@@ -98,7 +98,7 @@ const BeerCount = () => {
       {!firstLoad.current && (
         <Grid container className="w-100">
           <Grid size={12} className="flex-center-content">
-            <CountCustom count={beer} type="beer" />
+            <CountCustom count={beer} type="beer" loading={loading} />
 
             <div className={`flex-center constainer-icon-count beer-bg-color`}  >
               <BeerIcon
@@ -112,6 +112,7 @@ const BeerCount = () => {
             </div>
 
             <ButtonCustom
+              disabled={loading}
               className="beer-button mt-3"
               background="#754c37ff"
               onClick={() => handleIncre("beer")}
@@ -129,6 +130,7 @@ const BeerCount = () => {
             />
 
             <ButtonCustom
+              disabled={loading}
               className="beer-button mt-3 mb-3 flex-reverse"
               background="#947761ff"
               onClick={() => handleDelete("beer")}

@@ -92,7 +92,7 @@ const LoveCounter = () => {
       {!firstLoad.current && (
         <Grid container className="w-100">
           <Grid size={12} className="flex-between-column">
-            <CountCustom count={love} type="love" />
+            <CountCustom count={love} type="love" loading={loading} />
             <div className="flex-center constainer-icon-count love-bg-color mb-3"  >
 
               <LoveIcon
@@ -103,6 +103,7 @@ const LoveCounter = () => {
               />
             </div>
             <ButtonCustom
+              disabled={loading}
               className="octo-button"
               background="#962a60ff"
               onClick={() => handleIncre("love")}
@@ -120,6 +121,7 @@ const LoveCounter = () => {
             />
 
             <ButtonCustom
+              disabled={loading}
               background="#96667eff"
               className="octo-button mt-3 mb-3 flex-beetween"
               onClick={() => handleDelete("love")}
