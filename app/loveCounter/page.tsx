@@ -31,6 +31,7 @@ const LoveCounter = () => {
   const [limit, setLimit] = useState<number>(0);
   const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
   const { getLocation } = useGeolocation();
+  const positionLength = position.length;
   const docRef = doc(db, "counter", "love");
 
   useEffect(() => {
@@ -141,7 +142,7 @@ const LoveCounter = () => {
         </Grid>
       )}
       {!firstLoad.current &&
-        <MapLeaflet position={position} type="love" width="100%" />
+        <MapLeaflet position={position} type="love" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
       }
     </div>
   );

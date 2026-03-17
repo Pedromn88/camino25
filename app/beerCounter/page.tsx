@@ -16,6 +16,7 @@ import CountCustom from "../Component/Custom/CountCustom";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
 import dynamic from "next/dynamic";
 import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
+import { ClientPageRoot } from "next/dist/client/components/client-page";
 
 const MapLeaflet = dynamic(() => import("../Component/map/map"), {
   ssr: false,
@@ -36,6 +37,7 @@ const BeerCount = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
   const { getLocation } = useGeolocation();
+  const positionLength = position.length;
 
   const docRef = doc(db, "counter", "beer");
 
@@ -87,6 +89,7 @@ const BeerCount = () => {
   };
 
   const fillHeightBeer = (beer / limit) * 1000;
+
 
 
   return (
@@ -151,7 +154,7 @@ const BeerCount = () => {
       )}
 
       {!firstLoad.current &&
-        <MapLeaflet position={position} type="beer" width="100%" />
+        <MapLeaflet position={position} type="beer" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
       }
     </div>
   );

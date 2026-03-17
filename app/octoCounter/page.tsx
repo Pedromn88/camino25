@@ -25,17 +25,15 @@ interface octoResponse {
   geoLocation?: { latitude: number; longitude: number; idCount?: number }[];
 }
 
-
 const OctoCounter = () => {
   const firstLoad = useRef(true);
-
   const [octa, setOcta] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
   const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
   const { getLocation } = useGeolocation();
+  const positionLength = position.length;
   const docRef = doc(db, "counter", "octopus");
-
 
   useEffect(() => {
     setLoading(true);
@@ -143,7 +141,7 @@ const OctoCounter = () => {
         </Grid>
       )}
       {!firstLoad.current &&
-        <MapLeaflet position={position} type="octo" width="100%" />
+        <MapLeaflet position={position} type="octo" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
       }
     </div>
   );

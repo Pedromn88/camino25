@@ -20,7 +20,8 @@ interface FixMapProps {
     type: string | string[];
     total?: boolean,
     width?: string,
-    height?: string
+    height?: string,
+    center?: [number, number]
 }
 const createCustomClusterIcon = (cluster: any) => {
     return divIcon({
@@ -40,7 +41,7 @@ const MapFix = () => {
     return null;
 };
 
-const MapLeaflet = ({ position, type, height = "300px", width = "100%" }: FixMapProps) => {
+const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }: FixMapProps) => {
     const [street, setStreet] = useState<string | null>(null);
 
     const beerIcon = L.divIcon({
@@ -137,6 +138,8 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%" }: FixMap
         setStreet(street);
     };
 
+    console.log("🚀 ~ MapLeaflet ~ center:", center)
+
     return (
         <>
             <Grid container className="w-100">
@@ -145,7 +148,7 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%" }: FixMap
                     <p className="letter-map">O Camiño apretao 2026</p>
                 </Grid>
                 <MapContainer
-                    center={position?.[0]}
+                    center={center}
                     zoom={13}
                     scrollWheelZoom={false}
                     style={{ height: height, borderRadius: "0 0 10px 10px", width: width }}
