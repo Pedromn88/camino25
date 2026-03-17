@@ -16,7 +16,6 @@ import CountCustom from "../Component/Custom/CountCustom";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
 import dynamic from "next/dynamic";
 import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
-import { ClientPageRoot } from "next/dist/client/components/client-page";
 
 const MapLeaflet = dynamic(() => import("../Component/map/map"), {
   ssr: false,
