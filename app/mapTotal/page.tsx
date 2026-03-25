@@ -41,7 +41,7 @@ const MapTotal = () => {
         handleInitial();
     }, []);
 
-    console.log("🚀 ~ MapTotal ~ stages:", progress)
+
 
     return (
         <div className="flex-center flex-column pt-3 pb-3 w-100" >

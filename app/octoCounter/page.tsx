@@ -35,7 +35,9 @@ const OctoCounter = () => {
   const positionLength = position.length;
   const docRef = doc(db, "counter", "octopus");
 
-  useEffect(() => {
+
+
+  const handleInitial = () => {
     setLoading(true);
 
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -61,7 +63,7 @@ const OctoCounter = () => {
       firstLoad.current = false;
     });
     return () => unsubscribe();
-  }, []);
+  }
 
   const handleIncre = async (id: string) => {
     setLoading(true)
@@ -75,6 +77,7 @@ const OctoCounter = () => {
       latitude: coords.latitude,
       longitude: coords.longitude,
     });
+    handleInitial()
     setLoading(false)
   };
   const handleDelete = async (id: string) => {
@@ -82,6 +85,10 @@ const OctoCounter = () => {
   };
 
   const fillHeightOcto = ((limit - octa) / limit) * 284.5;
+
+  useEffect(() => {
+    handleInitial()
+  }, []);
 
   return (
     <div className="flex-center flex-column pb-3">
@@ -140,9 +147,11 @@ const OctoCounter = () => {
           </Grid>
         </Grid>
       )}
-      {!firstLoad.current &&
-        <MapLeaflet position={position} type="octo" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
-      }
+      <span className="w-100 container-map-total">
+        {!firstLoad.current &&
+          <MapLeaflet position={position} type="octo" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
+        }
+      </span>
     </div>
   );
 };

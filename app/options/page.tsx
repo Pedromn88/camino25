@@ -37,7 +37,6 @@ const Principal = () => {
 
   const loading = loadingOcto || loadingBeer || loadingLove;
 
-  console.log("🚀 ~ Principal ~ beerCount >= beerLimit:", beerCount, beerLimit)
   return (
     <Grid container className="container-button-options">
       {loading && <LoadingCustom message={"Cargando"} loading={loading} />}

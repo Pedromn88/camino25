@@ -138,7 +138,6 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }
         setStreet(street);
     };
 
-    console.log("🚀 ~ MapLeaflet ~ center:", center)
 
     return (
         <>

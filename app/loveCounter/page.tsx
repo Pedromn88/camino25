@@ -34,7 +34,8 @@ const LoveCounter = () => {
   const positionLength = position.length;
   const docRef = doc(db, "counter", "love");
 
-  useEffect(() => {
+
+  const handleInitial = () => {
     setLoading(true);
 
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
@@ -62,7 +63,7 @@ const LoveCounter = () => {
 
 
     return () => unsubscribe();
-  }, []);
+  }
 
   const handleIncre = async (id: string) => {
     setLoading(true)
@@ -76,14 +77,18 @@ const LoveCounter = () => {
       latitude: coords.latitude,
       longitude: coords.longitude,
     });
+    handleInitial()
     setLoading(false)
   };
   const handleDelete = async (id: string) => {
     await deleteCount(id);
   };
 
-
   const fillHeightLove = (love / limit) * 1000;
+
+  useEffect(() => {
+    handleInitial()
+  }, []);
 
   return (
     <div className="flex-center flex-column pb-3">
@@ -141,9 +146,11 @@ const LoveCounter = () => {
           </Grid>
         </Grid>
       )}
-      {!firstLoad.current &&
-        <MapLeaflet position={position} type="love" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
-      }
+      <span className="w-100 container-map-total">
+        {!firstLoad.current &&
+          <MapLeaflet position={position} type="love" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
+        }
+      </span>
     </div>
   );
 };

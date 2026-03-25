@@ -40,7 +40,10 @@ const BeerCount = () => {
 
   const docRef = doc(db, "counter", "beer");
 
-  useEffect(() => {
+
+
+
+  const handleInitial = async () => {
     setLoading(true);
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
@@ -65,14 +68,13 @@ const BeerCount = () => {
       firstLoad.current = false;
     });
     return () => unsubscribe();
-  }, []);
+  };
 
 
 
   const handleIncre = async (id: string) => {
     setLoading(true)
     const coords = await getLocation();
-
     if (!coords) {
       alert("No se pudo obtener tu ubicación 😢");
       return;
@@ -81,15 +83,20 @@ const BeerCount = () => {
       latitude: coords.latitude,
       longitude: coords.longitude,
     });
+    handleInitial()
     setLoading(false)
   };
+
+
   const handleDelete = async (id: string) => {
     await deleteCount(id);
   };
 
   const fillHeightBeer = (beer / limit) * 1000;
 
-
+  useEffect(() => {
+    handleInitial()
+  }, []);
 
   return (
     <div className="flex-center flex-column pb-3">
@@ -151,10 +158,11 @@ const BeerCount = () => {
           </Grid>
         </Grid>
       )}
-
-      {!firstLoad.current &&
-        <MapLeaflet position={position} type="beer" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
-      }
+      <span className="w-100 container-map-total">
+        {!firstLoad.current &&
+          <MapLeaflet position={position} type="beer" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
+        }
+      </span>
     </div>
   );
 };

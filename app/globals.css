@@ -289,3 +289,7 @@ a:hover {
   width: 100% !important;
   margin-top: 15px;
 }
+
+.container-map-total {
+  min-height: 350px;
+}
