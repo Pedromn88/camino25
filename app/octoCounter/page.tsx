@@ -144,7 +144,7 @@ const OctoCounter = () => {
       )}
       <span className="w-100 container-map-total">
         {!firstLoad.current && !loading &&
-          <MapLeaflet position={position} type="octo" width="100%" center={positionLength ? position[positionLength - 1] : defaultCoords} />
+          <MapLeaflet counterView={true} count={octa > 0} position={position} type="octo" width="100%" center={positionLength ? position[positionLength - 1] : defaultCoords} />
         }
       </span>
     </div>

@@ -13,16 +13,21 @@ import LoveIcon from "../svg/LoveIcon";
 import OctopusIcon from "../svg/OctopusIcon";
 import { Grid } from "@mui/material";
 import { ClientPageRoot } from "next/dist/client/components/client-page";
+import { mapHostel } from "../utils/constant";
 
 
 
 interface FixMapProps {
+    placeName?: string | null,
+    count?: boolean,
     position: [number, number][];
     type: string | string[];
     total?: boolean,
     width?: string,
     height?: string,
     center?: [number, number]
+    counterView?: boolean
+
 }
 const createCustomClusterIcon = (cluster: any) => {
     return divIcon({
@@ -42,9 +47,9 @@ const MapFix = () => {
     return null;
 };
 
-const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }: FixMapProps) => {
+const MapLeaflet = ({ position, type, height = "300px", width = "100%", center, count, counterView = false }: FixMapProps) => {
     const [street, setStreet] = useState<string | null>(null);
-    const positionLength = position.length;
+    const [placeName, setPlaceName] = useState<string | null>(null);
     const beerIcon = L.divIcon({
         html: renderToString(
             <BeerIcon
@@ -134,10 +139,28 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }
 
         return data.address?.road || data.display_name;
     };
-    const handleMarkerClick = async (lat: number, lon: number, setStreet: any) => {
-        const street = await getAddressFromCoords(lat, lon);
-        setStreet(street);
+
+
+    const findPlaceByCoords = (lat: number, lon: number) => {
+        const threshold = 0.0005;
+
+        return mapHostel.find(place =>
+            Math.abs(place.latitude - lat) < threshold &&
+            Math.abs(place.longitude - lon) < threshold
+        );
     };
+    const handleMarkerClick = async (
+        lat: number,
+        lon: number,
+        setStreet: any,
+        setPlaceName: any
+    ) => {
+        const street = await getAddressFromCoords(lat, lon);
+        const place = findPlaceByCoords(lat, lon);
+        setStreet(street);
+        setPlaceName(place?.name || "Lugar desconocido");
+    };
+
 
 
     return (
@@ -148,7 +171,7 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }
                     <p className="letter-map">O Camiño apretao 2026</p>
                 </Grid>
                 <MapContainer
-                    center={positionLength ? position[positionLength - 1] : center}
+                    center={center}
                     zoom={15}
                     scrollWheelZoom={false}
                     style={{ height: height, borderRadius: "0 0 10px 10px", width: width }}
@@ -159,12 +182,15 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <MarkerClusterGroup chunkedLoading iconCreateFunction={createCustomClusterIcon}>
-                        {position?.map((item: [number, number], index: number) => (
+                        {count && position?.map((item: [number, number], index: number) => (
                             <Marker key={index} position={item} icon={typeof type === "string" ? getIcon(type) : getIcon(type[index])}
                                 eventHandlers={{
-                                    click: () => handleMarkerClick(item[0], item[1], setStreet)
+                                    click: () => handleMarkerClick(item[0], item[1], setStreet, setPlaceName)
                                 }}>
-                                <Popup>{street || "Buscando calle..."}</Popup>
+                                <Popup>
+                                    {!counterView && <p className="font-bold text-lg">{placeName || "Buscando Local..."}</p>}
+                                    <p>{street || "Buscando calle..."}</p>
+                                </Popup>
                             </Marker>
 
                         ))}

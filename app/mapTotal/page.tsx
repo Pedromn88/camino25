@@ -18,11 +18,13 @@ export type TravelStage = {
     complete: boolean;
 };
 
+
 const MapTotal = () => {
     const [loading, setLoading] = useState(false);
     const [stages, setStages] = useState<TravelStage[]>([]);
     const [progress, setProgress] = useState<number>(0);
     const handleInitial = async () => {
+        setLoading(true)
         const stages = await getStages();
         setStages(stages);
         const completedStages = stages.filter((stage) => stage.complete);
@@ -35,6 +37,7 @@ const MapTotal = () => {
             0
         );
         setProgress(stages.filter((stage) => stage.complete).length);
+        setLoading(false)
     };
 
     useEffect(() => {
@@ -42,10 +45,12 @@ const MapTotal = () => {
     }, []);
 
 
+    console.log(mapHostel[progress])
+
 
     return (
         <div className="flex-center flex-column pt-3 pb-3 w-100" >
-            {mapHostel.length > 0 && <MapLeaflet height="70vh" width="100%" center={[mapHostel[progress].latitude, mapHostel[progress].longitude]} position={mapHostel.map((item) => [item.latitude, item.longitude])} type={mapHostel.map((item) => item.type)} />}
+            {mapHostel.length > 0 && !loading && <MapLeaflet count={true} height="70vh" width="100%" center={[mapHostel[progress].latitude, mapHostel[progress].longitude]} position={mapHostel.map((item) => [item.latitude, item.longitude])} type={mapHostel.map((item) => item.type)} />}
         </div>
     );
 };

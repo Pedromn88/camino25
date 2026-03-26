@@ -46,5 +46,4 @@ export const completeStage = async (stageNumber: number) => {
         stages: updatedStages,
     });
 
-    console.log(`Stage ${stageNumber} completada`);
 };   

@@ -78,7 +78,6 @@ const Stats = () => {
 
     const handleInitial = async () => {
         setLoading(true);
-
         const stages = await getStages();
         setStages(stages);
         const completedStages = stages.filter((stage) => stage.complete);
@@ -99,14 +98,10 @@ const Stats = () => {
         setLoading(false);
     };
 
-
-
     const handleCompleteStage = async () => {
         setLoading(true)
         const nextStage = (progress.completedStages ?? 0) + 1;
-        console.log("🚀 ~ handleCompleteStage ~ nextStage:", nextStage)
         await completeStage(nextStage);
-        console.log("🚀 ~ handleCompleteStage ~ nextStage:", "okkk")
         handleInitial();
         setLoading(false)
     };

@@ -92,6 +92,8 @@ const BeerCount = () => {
     handleInitial()
   }, []);
 
+
+
   return (
     <div className="flex-center flex-column pb-3">
       {loading && firstLoad.current && (
@@ -154,7 +156,7 @@ const BeerCount = () => {
       )}
       <span className="w-100 container-map-total">
         {!firstLoad.current && !loading &&
-          <MapLeaflet position={position} type="beer" width="100%" center={positionLength ? position?.[positionLength - 1] : defaultCoords} />
+          <MapLeaflet counterView={true} count={beer > 0} position={position} type="beer" width="100%" center={positionLength ? position?.[positionLength - 1] : defaultCoords} />
         }
       </span>
     </div>

@@ -149,7 +149,7 @@ const LoveCounter = () => {
       )}
       <span className="w-100 container-map-total">
         {!firstLoad.current && !loading &&
-          <MapLeaflet position={position} type="love" width="100%" center={positionLength ? position[positionLength - 1] : defaultCoords} />
+          <MapLeaflet counterView={true} count={love > 0} position={position} type="love" width="100%" center={positionLength ? position[positionLength - 1] : defaultCoords} />
         }
       </span>
     </div>
