@@ -45,9 +45,6 @@ const MapTotal = () => {
     }, []);
 
 
-    console.log(mapHostel[progress])
-
-
     return (
         <div className="flex-center flex-column pt-3 pb-3 w-100" >
             {mapHostel.length > 0 && !loading && <MapLeaflet count={true} height="70vh" width="100%" center={[mapHostel[progress].latitude, mapHostel[progress].longitude]} position={mapHostel.map((item) => [item.latitude, item.longitude])} type={mapHostel.map((item) => item.type)} />}
