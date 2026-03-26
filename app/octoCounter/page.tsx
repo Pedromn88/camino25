@@ -13,6 +13,7 @@ import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
 import dynamic from "next/dynamic";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { defaultCoords } from "../Component/utils/constant";
 
 
 const MapLeaflet = dynamic(() => import("../Component/map/map"), {
@@ -30,12 +31,10 @@ const OctoCounter = () => {
   const [octa, setOcta] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
-  const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
+  const [position, setPosition] = useState<[number, number][]>([defaultCoords]);
   const { getLocation } = useGeolocation();
   const positionLength = position.length;
   const docRef = doc(db, "counter", "octopus");
-
-
 
   const handleInitial = () => {
     setLoading(true);
@@ -43,20 +42,17 @@ const OctoCounter = () => {
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data() as octoResponse;
-
         setOcta(data.count ?? 0);
         setLimit(data.limits ?? 0);
-
         const coords =
           data.geoLocation?.map(
             (g) => [g.latitude, g.longitude] as [number, number]
           ) ?? [];
-
-        setPosition(coords.length ? coords : [[51.505, -0.09]]);
+        setPosition(coords.length ? coords : [defaultCoords]);
       } else {
         setOcta(0);
         setLimit(0);
-        setPosition([[51.505, -0.09]]);
+        setPosition([defaultCoords]);
       }
 
       setLoading(false);
@@ -68,7 +64,6 @@ const OctoCounter = () => {
   const handleIncre = async (id: string) => {
     setLoading(true)
     const coords = await getLocation();
-
     if (!coords) {
       alert("No se pudo obtener tu ubicación 😢");
       return;
@@ -148,8 +143,8 @@ const OctoCounter = () => {
         </Grid>
       )}
       <span className="w-100 container-map-total">
-        {!firstLoad.current &&
-          <MapLeaflet position={position} type="octo" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
+        {!firstLoad.current && !loading &&
+          <MapLeaflet position={position} type="octo" width="100%" center={positionLength ? position[positionLength - 1] : defaultCoords} />
         }
       </span>
     </div>

@@ -86,3 +86,4 @@ export const mapHostel: mapHostel[] = [
 
 ]
 
+export const defaultCoords: [number, number] = [43.56257683022216, -6.033615819344119];

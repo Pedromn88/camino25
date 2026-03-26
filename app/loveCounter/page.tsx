@@ -13,6 +13,7 @@ import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
 import dynamic from "next/dynamic";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebaseConfig";
+import { defaultCoords } from "../Component/utils/constant";
 
 const MapLeaflet = dynamic(() => import("../Component/map/map"), {
   ssr: false,
@@ -29,7 +30,7 @@ const LoveCounter = () => {
   const [love, setLove] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(0);
-  const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
+  const [position, setPosition] = useState<[number, number][]>([defaultCoords]);
   const { getLocation } = useGeolocation();
   const positionLength = position.length;
   const docRef = doc(db, "counter", "love");
@@ -50,11 +51,11 @@ const LoveCounter = () => {
             (g) => [g.latitude, g.longitude] as [number, number]
           ) ?? [];
 
-        setPosition(coords.length ? coords : [[51.505, -0.09]]);
+        setPosition(coords.length ? coords : [defaultCoords]);
       } else {
         setLove(0);
         setLimit(0);
-        setPosition([[51.505, -0.09]]);
+        setPosition([defaultCoords]);
       }
 
       setLoading(false);
@@ -147,8 +148,8 @@ const LoveCounter = () => {
         </Grid>
       )}
       <span className="w-100 container-map-total">
-        {!firstLoad.current &&
-          <MapLeaflet position={position} type="love" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
+        {!firstLoad.current && !loading &&
+          <MapLeaflet position={position} type="love" width="100%" center={positionLength ? position[positionLength - 1] : defaultCoords} />
         }
       </span>
     </div>

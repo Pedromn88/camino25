@@ -12,6 +12,7 @@ import "./styleMap.scss";
 import LoveIcon from "../svg/LoveIcon";
 import OctopusIcon from "../svg/OctopusIcon";
 import { Grid } from "@mui/material";
+import { ClientPageRoot } from "next/dist/client/components/client-page";
 
 
 
@@ -43,7 +44,7 @@ const MapFix = () => {
 
 const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }: FixMapProps) => {
     const [street, setStreet] = useState<string | null>(null);
-
+    const positionLength = position.length;
     const beerIcon = L.divIcon({
         html: renderToString(
             <BeerIcon
@@ -147,8 +148,8 @@ const MapLeaflet = ({ position, type, height = "300px", width = "100%", center }
                     <p className="letter-map">O Camiño apretao 2026</p>
                 </Grid>
                 <MapContainer
-                    center={center}
-                    zoom={13}
+                    center={positionLength ? position[positionLength - 1] : center}
+                    zoom={15}
                     scrollWheelZoom={false}
                     style={{ height: height, borderRadius: "0 0 10px 10px", width: width }}
 

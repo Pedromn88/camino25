@@ -16,6 +16,7 @@ import CountCustom from "../Component/Custom/CountCustom";
 import LoadingCustom from "../Component/Custom/LoadingCustom";
 import dynamic from "next/dynamic";
 import { useGeolocation } from "../Component/Custom/hooks/useGeoLocation";
+import { defaultCoords } from "../Component/utils/constant";
 
 const MapLeaflet = dynamic(() => import("../Component/map/map"), {
   ssr: false,
@@ -34,34 +35,29 @@ const BeerCount = () => {
   const [beer, setBeer] = useState<number>(0);
   const [limit, setLimit] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const [position, setPosition] = useState<[number, number][]>([[51.505, -0.09]]);
+  const [position, setPosition] = useState<[number, number][]>([defaultCoords]);
   const { getLocation } = useGeolocation();
   const positionLength = position.length;
 
   const docRef = doc(db, "counter", "beer");
-
-
-
 
   const handleInitial = async () => {
     setLoading(true);
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         const data = docSnap.data() as BeerResponse;
-
         setBeer(data.count ?? 0);
         setLimit(data.limits ?? 0);
-
         const coords =
           data.geoLocation?.map(
             (g) => [g.latitude, g.longitude] as [number, number]
           ) ?? [];
 
-        setPosition(coords.length ? coords : [[51.505, -0.09]]);
+        setPosition(coords.length ? coords : [defaultCoords]);
       } else {
         setBeer(0);
         setLimit(0);
-        setPosition([[51.505, -0.09]]);
+        setPosition([defaultCoords]);
       }
 
       setLoading(false);
@@ -69,8 +65,6 @@ const BeerCount = () => {
     });
     return () => unsubscribe();
   };
-
-
 
   const handleIncre = async (id: string) => {
     setLoading(true)
@@ -159,8 +153,8 @@ const BeerCount = () => {
         </Grid>
       )}
       <span className="w-100 container-map-total">
-        {!firstLoad.current &&
-          <MapLeaflet position={position} type="beer" width="100%" center={positionLength ? position[positionLength - 1] : [51.505, -0.09]} />
+        {!firstLoad.current && !loading &&
+          <MapLeaflet position={position} type="beer" width="100%" center={positionLength ? position?.[positionLength - 1] : defaultCoords} />
         }
       </span>
     </div>
